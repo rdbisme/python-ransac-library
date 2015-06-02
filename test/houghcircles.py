@@ -21,29 +21,34 @@ radguess=[100]
 mean = int(n.round(n.mean(radguess)))
 std = 10
 while(True):
-    print mean
     succ,frame = video.read()
     if succ:
         frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-        frame2 = cv2.medianBlur(frame,31)
-        #frame2 = cv2.GaussianBlur(frame,(3,3),0)
+        #frame2 = cv2.medianBlur(frame,31)
+        frame = cv2.GaussianBlur(frame,(11,11),0)
+        frame2 = cv2.adaptiveThreshold(frame,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
+                                       cv2.THRESH_BINARY_INV, \
+                                       3,1)
+        
         cs = cv2.HoughCircles(frame2,\
                                    method=cv2.HOUGH_GRADIENT,\
-                                   dp=1,\
+                                   dp=4,\
                                    minDist=20,\
-                                   param1=80, 
-                                   param2=20,\
+                                   param1=30, 
+                                   param2=15,\
                                    minRadius=mean-std,
                                    maxRadius=mean+std)
         
         if not(cs == None):
-            #cv2.circle(frame,(cs[0,0,0],cs[0,0,1]),cs[0,0,2],(255,255,255),2)
-            #cv2.imshow('frame',frame)
-            #cv2.waitKey(100)
-            radguess.append(cs[0,0,2])
-            mean = int(n.round(n.mean(radguess)))
-            std = int(n.round(0.4*mean))
-            #out.write(frame)
+            cv2.circle(frame2,(cs[0,0,0],cs[0,0,1]),cs[0,0,2],(255,255,255),2)
+            cv2.imshow('frame',frame2)
+            if not(cv2.waitKey(1) == ord('q')):
+                radguess.append(cs[0,0,2])
+                mean = int(n.round(n.mean(radguess)))
+                std = int(n.round(0.45*mean))
+                #out.write(frame)
+            else:
+                break;
     else:
         break
 
@@ -76,8 +81,8 @@ cv2.waitKey(5000)'''
 # When everything done, release the capture
 video.release()
 out.release()
-#cv2.destroyAllWindows()
-b,a = sig.butter(2, 0.01, 'low', output='ba')
+cv2.destroyAllWindows()
+b,a = sig.butter(8, 0.03, 'low', output='ba')
 radguess = sig.filtfilt(b, a, radguess)
 plt.plot(radguess)
 plt.show()
