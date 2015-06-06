@@ -40,7 +40,7 @@ while(True):
                                    maxRadius=mean+std)
         
         if not(cs == None):
-            cv2.circle(frame2,(cs[0,0,0],cs[0,0,1]),cs[0,0,2],(255,255,255),2)
+            cv2.circle(frame2,(cs[0,0,0],cs[0,0,1]),cs[0,0,2],(155,255,255),2)
             cv2.imshow('frame',frame2)
             if not(cv2.waitKey(1) == ord('q')):
                 radguess.append(cs[0,0,2])
