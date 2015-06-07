@@ -1,6 +1,6 @@
-#import numpy as n
-from scipy import optimize as opt
 import numpy as n
+from scipy import optimize as opt
+
 
 class Circle(object):
     ''' 
@@ -19,7 +19,7 @@ class Circle(object):
         circumference given three points
         
         Args:
-            points: a (3,2) numpy array, each row is a 2D Point
+            points: a (3,2) numpy array, each row is a 2D Point.
         
         Returns: 
             circle: A (3,) numpy array that contains the circumference radius
