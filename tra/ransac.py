@@ -1,6 +1,7 @@
 from __future__ import division
 import cv2
 from circle import Circle as c
+from matplotlib import pyplot as plt
 import numpy as n
 from numpy import random as rnd
 import warnings
@@ -58,8 +59,7 @@ class RansacCircle(object):
         # Current percent of inliers over the total points
         percent = 0
         
-        # Pre-allocating the circle data structure
-        circle = n.zeros((3,))
+
         while not(percent>self.inliers_percent or it>self.max_it):
             
             # Guess three pixels from the non-zero ones
@@ -97,8 +97,30 @@ class RansacCircle(object):
         return (circle,percent)
     
             
-            
-            
+    def video_processing(self,videofile,plots = False):
+        video = cv2.VideoCapture(videofile)
+        nframes = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
+        
+        #Pre-allocating dataset for circles
+        cs = n.zeros((nframes,3))
+        
+        if plots:
+            # Pre allocating theta angle for plotting circles
+            theta = n.linspace(-n.pi,n.pi,100)
+        
+        for i in xrange(nframes):
+            succ, frame = video.read()
+            frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+            if succ: #If successfully got the video frame
+                
+                cs[i] = self.image_search(frame)
+                
+                if plots:
+                    plt.imshow(frame, cmap='gray')
+                    plt.plot(cs[i].yc + cs[i].radius*n.cos(theta), cs[i].xc + cs[i].radius*n.sin(theta),'r-',linewidth=2)
+            else:
+                raise RuntimeError("Error in retrieving video frames.")
+        return cs
             
             
             

@@ -5,7 +5,7 @@ import numpy as n
 from tra import RansacCircle
 
 video = cv2.VideoCapture('../video/01_CMP.avi')
-video.set(cv2.CAP_PROP_POS_FRAMES,500)
+video.set(cv2.CAP_PROP_POS_FRAMES,600)
 succ, frame = video.read()
 frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 
@@ -14,7 +14,7 @@ dc,percent = ransac_process.image_search(frame)
 
 theta = n.linspace(-n.pi,n.pi,100)
 plt.imshow(frame, cmap='gray')
-plt.plot(dc.yc + dc.radius*n.cos(theta), dc.xc + dc.radius*n.sin(theta))
+plt.plot(dc.yc + dc.radius*n.cos(theta), dc.xc + dc.radius*n.sin(theta),'r-',linewidth=2)
 #plt.plot(pps[:,1],pps[:,0],'wo')
 print percent
 plt.show()
