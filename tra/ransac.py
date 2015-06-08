@@ -1,10 +1,13 @@
 from __future__ import division
 import cv2
-from circle import Circle as c
-from matplotlib import pyplot as plt
+import tra.circle as c
+import matplotlib.pyplot as plt
+import matplotlib.animation as ani
 import numpy as n
-from numpy import random as rnd
+import numpy.random as rnd
 import warnings
+
+plt.rcParams['animation.ffmpeg_path'] = '/opt/local/bin/ffmpeg'
 
 class RansacCircle(object):
     '''
@@ -28,11 +31,19 @@ class RansacCircle(object):
         Returns:
             circle: A (3,) numpy array that contains the circle radius
             and center coordinates.
+            
+            percent: The percentage of "fitness" of the circle detected
+                     in the image
+            
+        Raises:
+            ValueError: If the thresholded image is completely empty (all pixels intensities
+                        == 0, a ValueError is raised)
         '''
         
         #=======================================================================
         # TODO check if the image is really a grayscale
         #=======================================================================
+        
         #Width and Height of the video
         h,w = n.shape(image)
         
@@ -44,6 +55,12 @@ class RansacCircle(object):
         
         # Only the non-zero pixels
         pixels = n.where(image>0)
+        
+        #Thresholded image can be empty
+        if not(pixels):
+            raise ValueError('Thresholded image is completely empty.\
+                            The threshold argument is too high or the image\
+                            is totally black')
         
         # Orienting correctly the points in a (n,2) shape
         # needed because of arguments of Circle.points_distance()
@@ -69,7 +86,7 @@ class RansacCircle(object):
             
             # Generating Circle from the three given points
             try:
-                guess_circle = c(pts)
+                guess_circle = c.Circle(pts)
             except RuntimeError: # If the three points are collinear the circle cannot be computed
                 warnings.warn('Probable collinear points for circle')
                 continue
@@ -90,10 +107,11 @@ class RansacCircle(object):
                 circle = guess_circle
         
                 
-        if it >self.max_it:
-            warnings.warn('''Max Iterations number reached. 
-                            The current percentage of detection is {0}'''\
-                          .format(percent),RuntimeWarning)
+        #=======================================================================
+        # if it >self.max_it:
+        #     warnings.warn('''Max Iterations number reached. The current percentage of fitness is {0}'''\
+        #                   .format(percent),RuntimeWarning)
+        #=======================================================================s
         return (circle,percent)
     
             
@@ -106,20 +124,36 @@ class RansacCircle(object):
         
         if plots:
             # Pre allocating theta angle for plotting circles
+            fig=plt.figure()
             theta = n.linspace(-n.pi,n.pi,100)
+            ims = []
         
         for i in xrange(nframes):
             succ, frame = video.read()
             frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-            if succ: #If successfully got the video frame
+            
+            if succ: # If successfully got the video frame
                 
-                cs[i] = self.image_search(frame)
+                try:
+                    circle,percent = self.image_search(frame)
+                    cs[i,:] = [circle.radius,circle.yc,circle.xc]
+                except ValueError:
+                    cs[i,:] = [0,0,0] 
                 
+                # Animation Routine
                 if plots:
-                    plt.imshow(frame, cmap='gray')
-                    plt.plot(cs[i].yc + cs[i].radius*n.cos(theta), cs[i].xc + cs[i].radius*n.sin(theta),'r-',linewidth=2)
+                    if cs[i,0]:
+                        plt.imshow(frame, cmap='gray')
+                        p = plt.plot(circle.yc + circle.radius*n.cos(theta), circle.xc + circle.radius*n.sin(theta),'r-',linewidth=2)
+                        ims.append(p)
             else:
                 raise RuntimeError("Error in retrieving video frames.")
+            
+        if plots:
+            movie= ani.ArtistAnimation(fig,ims,interval = 100)
+            #moviename = videofile.split('.')
+            #movie.save(moviename[0]+'_p'+'.'+moviename[1])
+            movie.save('movie.avi')
         return cs
             
             

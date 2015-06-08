@@ -1,5 +1,4 @@
-from tra import RansacCircle
+import tra
+ransac = tra.RansacCircle()
 
-ransac = RansacCircle()
-
-circles = ransac.video_processing('../video/01_CMP.avi', plots=True)
+circles = ransac.video_processing('../video/01_CMP.avi', plots=False)
