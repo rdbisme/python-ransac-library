@@ -1,5 +1,6 @@
+from __future__ import division
 import numpy as n
-from scipy import optimize as opt
+import scipy.linalg as linalg
 
 class Feature(object):
     '''
@@ -54,7 +55,7 @@ class Circle(object):
         
         Returns: 
             circle: A (3,) numpy array that contains the circumference radius
-            and center coordinates.
+            and center coordinates [radius,xc,yc]
             
         Raises: 
             RuntimeError: If the circle computation does not succeed
@@ -62,51 +63,28 @@ class Circle(object):
             
         
         
-    '''
-        pt1 = points[0]
-        pt2 = points[1]
-        pt3 = points[2]
-            
+    '''            
       
-        def __circle(x,pt1,pt2,pt3):
-            r  = x[0]
-            xc = x[1]
-            yc = x[2]
-            
-            return [
-                    (pt1[0]-xc)**2 + (pt1[1]-yc)**2  - r**2,
-                    (pt2[0]-xc)**2 + (pt2[1]-yc)**2  - r**2,
-                    (pt3[0]-xc)**2 + (pt3[1]-yc)**2  - r**2
-                    ]
+        # Linear system for (D,E,F) in circle 
+        # equation: D*x + E*y + F = -(x**2 + y**2)
         
-        def __jacobian(x,pt1,pt2,pt3):
-            r = x[0]
-            xc = x[1]
-            yc = x[2]
-            
-            F = n.array([
-                         [-2*r,-2*(pt1[0]-xc), -2*(pt1[1]-yc)],
-                         [-2*r,-2*(pt2[0]-xc), -2*(pt2[1]-yc)],
-                         [-2*r,-2*(pt3[0]-xc), -2*(pt3[1]-yc)]
-                         ])
-            return F
+        # Generating A matrix 
+        A = n.array([(x,y,1) for x,y in points])
+        # Generating rhs
+        rhs = n.array([-(x**2+y**2) for x,y in points])
         
-        #Initial Guess for root
-        X0 = [
-              n.sum((pt1,pt2,pt3)),
-              n.mean((pt1[0],pt2[0],pt3[0])),
-              n.mean((pt1[1],pt2[1],pt3[1]))
-              ]
-    
-        circle = opt.root(__circle,X0,args=(pt1,pt2,pt3),\
-                          method='lm',jac=__jacobian)
-    
-        
-        if circle['success']:
-            return circle['x']
-        else:
+        try:
+            #Solving linear system
+            D,E,F = linalg.solve(A,rhs)
+        except linalg.LinAlgError:
             raise RuntimeError('Circle calculation not successful. Please\
             please check the input data, probable collinear points')
+            
+        xc = -D/2
+        yc = -E/2
+        r = n.sqrt(xc**2+yc**2-F)
+
+        return [r,xc,yc]
             
     def points_distance(self,points):
         d = n.abs(\
