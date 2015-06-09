@@ -5,8 +5,8 @@ import numpy as n
 from tra.ransac import RansacFeature
 from tra.features import Circle
 
-video = cv2.VideoCapture('../video/01_CMP.avi')
-video.set(cv2.CAP_PROP_POS_FRAMES,200)
+video = cv2.VideoCapture('../video/02_XVID.avi')
+video.set(cv2.CAP_PROP_POS_FRAMES,0)
 succ, frame = video.read()
 frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 
