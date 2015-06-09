@@ -75,10 +75,10 @@ class Circle(object):
         
         try:
             #Solving linear system
-            D,E,F = linalg.solve(A,rhs)
+            D,E,F = linalg.lstsq(A,rhs)[0]
         except linalg.LinAlgError:
             raise RuntimeError('Circle calculation not successful. Please\
-            please check the input data, probable collinear points')
+             check the input data, probable collinear points')
             
         xc = -D/2
         yc = -E/2

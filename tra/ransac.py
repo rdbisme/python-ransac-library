@@ -21,7 +21,7 @@ class RansacFeature(object):
              a pixel is considere an inlier if its distance is < dst)
     '''
     
-    def __init__(self,feature,max_it=100,inliers_percent=0.6, threshold = 40, dst = 10):
+    def __init__(self,feature,max_it=100,inliers_percent=0.6, threshold = 100, dst = 10):
         self.feature = feature
         self.max_it = max_it 
         self.inliers_percent = inliers_percent 
