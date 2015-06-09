@@ -2,14 +2,15 @@ from __future__ import division
 import cv2
 from matplotlib import pyplot as plt
 import numpy as n
-from tra import RansacCircle
+from tra.ransac import RansacFeature
+from tra.features import Circle
 
 video = cv2.VideoCapture('../video/01_CMP.avi')
-video.set(cv2.CAP_PROP_POS_FRAMES,600)
+video.set(cv2.CAP_PROP_POS_FRAMES,200)
 succ, frame = video.read()
 frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 
-ransac_process = RansacCircle(max_it = 1E2, inliers_percent=0.7,dst=5)
+ransac_process = RansacFeature(Circle,max_it = 1E2, inliers_percent=0.7,dst=2.5)
 dc,percent = ransac_process.image_search(frame)
 
 theta = n.linspace(-n.pi,n.pi,100)

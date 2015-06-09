@@ -1,6 +1,34 @@
 import numpy as n
 from scipy import optimize as opt
 
+class Feature(object):
+    '''
+    Abstract class that represents a feature to be used
+    with the RansacFeature class in tra.ransac module
+    
+    Attributes:
+        min_points: The minimum points required to compute the feature
+                    (e.g. Circle.min_points = 3)
+    '''
+    
+    def __init__(self):
+        raise NotImplemented
+    
+    def points_distance(self,points):
+        ''' 
+        This function implements a method to compute the distance 
+        of points from the feature
+        
+        Args:
+            points: a numpy array of points the distance must be 
+                    computed of
+        
+        Returns: 
+            distance: the computed distance of the points from the
+                      feature
+        '''
+        
+        raise NotImplemented
 
 class Circle(object):
     ''' 
@@ -9,6 +37,9 @@ class Circle(object):
     Properties:
     - 
     '''
+    
+    min_points = 3
+    
     def __init__(self,points):
         self.radius,self.xc,self.yc = self.__gen(points)
     
