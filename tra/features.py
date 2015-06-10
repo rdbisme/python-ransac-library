@@ -1,6 +1,7 @@
 from __future__ import division
 import numpy as n
 import scipy.linalg as linalg
+import scipy.spatial.distance as dist
 
 class Feature(object):
     '''
@@ -87,10 +88,6 @@ class Circle(object):
         return [r,xc,yc]
             
     def points_distance(self,points):
-        d = n.abs(\
-                  n.sqrt(\
-                         n.power(self.xc - points[:,0],2) + n.power(self.yc - points[:,1],2)
-                         )\
-                  - self.radius
-                  )
+        xa = n.array([self.xc,self.yc]).reshape((1,2))
+        d = n.abs(dist.cdist(points,xa) - self.radius)
         return d

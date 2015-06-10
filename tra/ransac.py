@@ -18,7 +18,7 @@ class RansacFeature(object):
         threshold: Value of threshold used after the image normalization \
                    (can be an integer from 1 to 254)
         dst: the distance of the inliers pixels from the feature (i.e.\
-             a pixel is considere an inlier if its distance is < dst)
+             a pixel is considered an inlier if its distance is < dst)
     '''
     
     def __init__(self,feature,max_it=100,inliers_percent=0.6, threshold = 100, dst = 10):
@@ -26,7 +26,7 @@ class RansacFeature(object):
         self.max_it = max_it 
         self.inliers_percent = inliers_percent 
         self.threshold = threshold
-        self.dst = dst 
+        self.dst = dst
     
     def image_search(self,image):
         ''' This method look for the feature inside a grayscale image

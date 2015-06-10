@@ -6,7 +6,7 @@ from tra.ransac import RansacFeature
 from tra.features import Circle
 
 video = cv2.VideoCapture('../video/H10Al01g_250_10_01_G1.avi')
-video.set(cv2.CAP_PROP_POS_FRAMES,2500)
+video.set(cv2.CAP_PROP_POS_FRAMES,400)
 succ, frame = video.read()
 frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 

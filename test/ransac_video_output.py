@@ -10,10 +10,10 @@ N = 100
 
 circles = n.load('data.npy')
 
-x = n.where((circles[:,0]>70) & (circles[:,0]<500))[0]
+x = n.where((circles[:,0]>70) & (circles[:,0]<500))[0][125:]
 circles = circles[x]
 
-b,a = sig.butter(8,0.05, 'low', output='ba')
+b,a = sig.butter(8,0.01, 'low', output='ba')
 filtered = sig.filtfilt(b, a, circles[:,0])
 
 
@@ -28,7 +28,7 @@ x = n.multiply(x,frame_to_time)
 filtered= n.multiply(filtered,pixel_to_mm)
 circles = n.multiply(circles,pixel_to_mm)
 
-popt,_P = opt.curve_fit(opt_func, x, circles[:,0])
+popt,_P = opt.curve_fit(opt_func, x, filtered)
 y = opt_func(x,*popt)
 eq = "$r={0:+1.2f}t^{{{2:1.2f}}}{1:+1.2f}$".format(*popt)
 
