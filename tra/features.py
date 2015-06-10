@@ -16,6 +16,10 @@ class Feature(object):
     def __init__(self):
         raise NotImplemented
     
+    @property
+    def min_points(self):
+        '''Min number of points to define the feature'''
+    
     def points_distance(self,points):
         ''' 
         This function implements a method to compute the distance 
@@ -32,7 +36,7 @@ class Feature(object):
         
         raise NotImplemented
 
-class Circle(object):
+class Circle(Feature):
     ''' 
     This is an helper class for circle-related activities.
     
