@@ -67,7 +67,7 @@ class RansacFeature(object):
                             is totally black')
         
         # Orienting correctly the points in a (n,2) shape
-        # needed because of arguments of Circle.points_distance()
+        # needed because of arguments of feature.points_distance()
         pixels = n.transpose(n.vstack([pixels[0],pixels[1]]))
         
         # -- Starting Loop -- #

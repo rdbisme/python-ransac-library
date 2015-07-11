@@ -1,6 +1,7 @@
 from __future__ import division
 import cv2
 from matplotlib import pyplot as plt
+import multiprocessing as mp
 import numpy as n
 from tra.ransac import RansacFeature
 from tra.features import Circle
@@ -10,6 +11,7 @@ video.set(cv2.CAP_PROP_POS_FRAMES,400)
 succ, frame = video.read()
 frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 
+pool = mp.Pool(mp.cpu_count())
 ransac_process = RansacFeature(Circle,max_it = 3E2, inliers_percent=0.7,dst=2.5,threshold=230)
 dc,percent = ransac_process.image_search(frame)
 
