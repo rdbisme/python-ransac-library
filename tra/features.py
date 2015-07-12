@@ -1,6 +1,7 @@
 from __future__ import division
 import numpy as n
 import scipy.linalg as linalg
+import scipy.optimize as opt
 import scipy.spatial.distance as dist
 
 class Feature(object):
@@ -38,10 +39,7 @@ class Feature(object):
 
 class Circle(Feature):
     ''' 
-    This is an helper class for circle-related activities.
-    
-    Properties:
-    - 
+    Feature class for a Circle
     '''
     
     min_points = 3
@@ -95,3 +93,59 @@ class Circle(Feature):
         xa = n.array([self.xc,self.yc]).reshape((1,2))
         d = n.abs(dist.cdist(points,xa) - self.radius)
         return d
+    
+class Exponential (Feature):
+    '''
+    Feature Class for an exponential curve y=ax**k + b
+    '''
+    
+    min_points = 3
+    
+    def __init__(self,points):
+        self.a,self.k,self.b = self.__gen(points)
+    
+
+    def __gen(self,points):
+        '''
+        Compute the three parameters that univocally determine the
+        exponential curve
+        
+        Args:
+            points: a (3,2) numpy array, each row is a 2D Point.
+        
+        Returns: 
+            exp: A (3,) numpy array that contains the a,n,b parameters
+            [a,n,b]
+            
+        Raises: 
+            RuntimeError: If the circle computation does not succeed
+                a RuntimeError is raised.
+            
+        
+        
+    '''
+        def exponential(x,points):
+            aa = x[0]
+            nn = x[1]
+            bb = x[2]
+            
+            f = n.zeros((3,))
+            f[0] = n.abs(aa)*n.power(points[0,0],nn)+bb - points[0,1]
+            f[1] = n.abs(aa)*n.power(points[1,0],nn)+bb - points[1,1]
+            f[2] = n.abs(aa)*n.power(points[2,0],nn)+bb - points[2,1]
+            
+            return f
+        
+
+        p = opt.root(exponential,[1,1,1],points,method='lm')['x']
+        return p
+
+            
+    def points_distance(self,points):
+        x = points[:,0]
+        xa = n.array([x,self.a*n.power(x,self.k)+self.b])
+        xa = xa.T
+        d = n.abs(dist.cdist(points,xa))
+        return n.diag(d)
+    
+    

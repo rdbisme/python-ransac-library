@@ -4,6 +4,7 @@ import numpy as np
 import scipy.optimize as opt
 import scipy.signal as sig
 import cPickle
+from tra import ransac,features
 
 def opt_func(t,a,b,n):
     return a*t**n + b
@@ -48,8 +49,14 @@ for i,d in enumerate(data):
 
     
     #Optimization Fitting
-    popt,_P = opt.curve_fit(opt_func, t, filtered,p0=popt)
-    y = opt_func(t,*popt)
+    #popt,_P = opt.curve_fit(opt_func, t, filtered,p0=popt)
+    #y = opt_func(t,*popt)
+    rnsc = ransac.RansacFeature(features.Exponential,dst=0.8,max_it=500)
+    pixels = np.array([
+                      t,points
+                      ]).T
+    exp_f,_ = rnsc.compute_feature(pixels)
+    y = exp_f.a*np.power(t,exp_f.k)+ exp_f.b
     eq = "$r={0:+1.2f}t^{{{2:1.2f}}}{1:+1.2f}$".format(*popt)
     
     plt.plot(t,points,'o',mfc='0.4',alpha=0.3)
