@@ -5,12 +5,12 @@ import numpy as n
 from tra.ransac import RansacFeature
 from tra.features import Circle
 
-video = cv2.VideoCapture('../video/H10Al01g_250_10_01_G1.avi')
-video.set(cv2.CAP_PROP_POS_FRAMES,400)
+video = cv2.VideoCapture('../video/H10OCAlex_250_10_01_G2.avi')
+video.set(cv2.CAP_PROP_POS_FRAMES,350)
 succ, frame = video.read()
 frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 
-ransac_process = RansacFeature(Circle,max_it = 3E2, inliers_percent=0.7,dst=2.5,threshold=230)
+ransac_process = RansacFeature(Circle,max_it = 1E3, inliers_percent=0.7,dst=5,threshold=200)
 dc,percent = ransac_process.image_search(frame)
 
 theta = n.linspace(-n.pi,n.pi,100)

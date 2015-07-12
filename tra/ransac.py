@@ -27,15 +27,74 @@ class RansacFeature(object):
         self.inliers_percent = inliers_percent 
         self.threshold = threshold
         self.dst = dst
+        
+    def compute_feature(self,pixels):
+        ''' This method look for the feature inside a set of points
+        
+        Args:
+            points: the set of points.
+            
+        Returns:
+            feature: The detected feature object
+            percent: The percentage of "fitness" (i.e inliers/total_points) of the feature detected
+                     in the image
+            
+        '''
+        
+        # -- Starting Loop -- #
+        
+        # Pre-allocating guess points 
+        pts = n.zeros((self.feature.min_points,2))
+        
+        # Starting iterations
+        it = 0
+        
+        # Current percent of inliers over the total points
+        percent = 0
+        
+
+        while not(percent>self.inliers_percent or it>self.max_it):
+            
+            # Guess three pixels from the non-zero ones
+            pts = pixels[rnd.randint(n.size(pixels[:,0]),size=self.feature.min_points)]
+            
+          
+            
+            # Generating Circle from the three given points
+            try:
+                guess_feature = self.feature(pts)
+            except RuntimeError: # If the three points are collinear the circle cannot be computed
+                continue
+            # Compute distance of all non-zero points from the circumference 
+            distances = guess_feature.points_distance(pixels)
+            
+            # Check which points are inliers (i.e. near the circle)
+            inliers = n.size(pixels[distances <= self.dst])
+            
+            #Compute the percentage
+            percent_new = inliers/n.size(pixels)
+            
+            it = it+1
+            
+            if percent_new > percent:
+                # Update if better approximation
+                percent = percent_new
+                feature = guess_feature
+        
+                
+        #=======================================================================
+        # if it >self.max_it:
+        #     warnings.warn('''Max Iterations number reached. The current percentage of fitness is {0}'''\
+        #                   .format(percent),RuntimeWarning)
+        #=======================================================================s
+        return (feature,percent)
     
     def image_search(self,image):
         ''' This method look for the feature inside a grayscale image
         
         Args:
             image: the image where to detect the circle.
-            min_points: the minimum number of points to retrieve the \
-                        feature (i.e. 3 points for circle)
-            
+
         Returns:
             feature: The detected feature object
             percent: The percentage of "fitness" (i.e inliers/total_points) of the feature detected
@@ -70,54 +129,8 @@ class RansacFeature(object):
         # needed because of arguments of Circle.points_distance()
         pixels = n.transpose(n.vstack([pixels[0],pixels[1]]))
         
-        # -- Starting Loop -- #
+        return self.compute_feature(pixels)
         
-        # Pre-allocating guess points 
-        pts = n.zeros((self.feature.min_points,2))
-        
-        # Starting iterations
-        it = 0
-        
-        # Current percent of inliers over the total points
-        percent = 0
-        
-
-        while not(percent>self.inliers_percent or it>self.max_it):
-            
-            # Guess three pixels from the non-zero ones
-            pts = pixels[rnd.randint(n.size(pixels[:,0]),size=self.feature.min_points)]
-            
-          
-            
-            # Generating Circle from the three given points
-            try:
-                guess_feature = self.feature(pts)
-            except RuntimeError: # If the three points are collinear the circle cannot be computed
-                warnings.warn('Probable collinear points for circle')
-                continue
-            # Compute distance of all non-zero points from the circumference 
-            distances = guess_feature.points_distance(pixels)
-            
-            # Check which points are inliers (i.e. near the circle)
-            inliers = n.size(pixels[distances <= self.dst])
-            
-            #Compute the percentage
-            percent_new = inliers/n.size(pixels)
-            
-            it = it+1
-            
-            if percent_new > percent:
-                # Update if better approximation
-                percent = percent_new
-                feature = guess_feature
-        
-                
-        #=======================================================================
-        # if it >self.max_it:
-        #     warnings.warn('''Max Iterations number reached. The current percentage of fitness is {0}'''\
-        #                   .format(percent),RuntimeWarning)
-        #=======================================================================s
-        return (feature,percent)
     
     def video_processing(self,videofile):
         video = cv2.VideoCapture(videofile)
