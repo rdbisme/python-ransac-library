@@ -5,8 +5,9 @@ import numpy as n
 from tra.ransac import RansacFeature
 from tra.features import Circle
 
-video = cv2.VideoCapture('../video/H10OCAlex_250_10_01_G2.avi')
-video.set(cv2.CAP_PROP_POS_FRAMES,350)
+video = cv2.VideoCapture('../video/14_XVID.avi')
+print video.get(cv2.CAP_PROP_FPS)
+video.set(cv2.CAP_PROP_POS_FRAMES,850)
 succ, frame = video.read()
 frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 
@@ -16,8 +17,12 @@ dc,percent = ransac_process.image_search(frame)
 theta = n.linspace(-n.pi,n.pi,100)
 plt.imshow(frame, cmap='gray')
 plt.plot(dc.yc + dc.radius*n.cos(theta), dc.xc + dc.radius*n.sin(theta),'r-',linewidth=2)
+plt.ylim([0,512])
+plt.xlim([0,512])
+plt.axis('off')
 #plt.plot(pps[:,1],pps[:,0],'wo')
 print percent
+plt.savefig('data-capture.eps',format='eps',dpi=300)
 plt.show()
 
 

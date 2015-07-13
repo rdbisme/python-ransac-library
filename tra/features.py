@@ -96,7 +96,7 @@ class Circle(Feature):
     
 class Exponential (Feature):
     '''
-    Feature Class for an exponential curve y=ax**k + b
+    Feature Class for an exponential curve y=a*x**k +b 
     '''
     
     min_points = 3

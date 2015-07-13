@@ -2,9 +2,9 @@ import numpy as np
 import scipy.optimize as opt
 import matplotlib.pyplot as plt
 from tra import features as ffs
-a = 2
-b = 2
-n = 4
+a = 1
+b = 1
+n = 3
 x = np.linspace(2,10,11)
 y = a*np.power(x,n)+b
 i = [0,3,5]
