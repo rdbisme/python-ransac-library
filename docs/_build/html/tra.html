@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tra package &mdash; Python RANSAC Library 0.1a documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python RANSAC Library 0.1a documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Python RANSAC Library 0.1a documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tra-package">
+<h1>tra package<a class="headerlink" href="#tra-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tra.features">
+<span id="tra-features-module"></span><h2>tra.features module<a class="headerlink" href="#module-tra.features" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tra.features.Circle">
+<em class="property">class </em><code class="descclassname">tra.features.</code><code class="descname">Circle</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/features.html#Circle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.features.Circle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tra.features.Feature" title="tra.features.Feature"><code class="xref py py-class docutils literal"><span class="pre">tra.features.Feature</span></code></a></p>
+<p>Feature class for a Circle</p>
+<dl class="attribute">
+<dt id="tra.features.Circle.min_points">
+<code class="descname">min_points</code><em class="property"> = 3</em><a class="headerlink" href="#tra.features.Circle.min_points" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tra.features.Circle.points_distance">
+<code class="descname">points_distance</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/features.html#Circle.points_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.features.Circle.points_distance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tra.features.Exponential">
+<em class="property">class </em><code class="descclassname">tra.features.</code><code class="descname">Exponential</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/features.html#Exponential"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.features.Exponential" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tra.features.Feature" title="tra.features.Feature"><code class="xref py py-class docutils literal"><span class="pre">tra.features.Feature</span></code></a></p>
+<p>Feature Class for an exponential curve y=a*x**k +b</p>
+<dl class="attribute">
+<dt id="tra.features.Exponential.min_points">
+<code class="descname">min_points</code><em class="property"> = 3</em><a class="headerlink" href="#tra.features.Exponential.min_points" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tra.features.Exponential.points_distance">
+<code class="descname">points_distance</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/features.html#Exponential.points_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.features.Exponential.points_distance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tra.features.Feature">
+<em class="property">class </em><code class="descclassname">tra.features.</code><code class="descname">Feature</code><a class="reference internal" href="_modules/tra/features.html#Feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.features.Feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Abstract class that represents a feature to be used
+with the RansacFeature class in tra.ransac module</p>
+<dl class="attribute">
+<dt id="tra.features.Feature.min_points">
+<code class="descname">min_points</code><a class="headerlink" href="#tra.features.Feature.min_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>The minimum points required to compute the feature
+(e.g. Circle.min_points = 3)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">min_points</code></dt>
+<dd><p>Min number of points to define the feature</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tra.features.Feature.points_distance">
+<code class="descname">points_distance</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/features.html#Feature.points_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.features.Feature.points_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function implements a method to compute the distance
+of points from the feature</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> &#8211; a numpy array of points the distance must be
+computed of</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the computed distance of the points from the
+feature</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">distance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tra.ransac">
+<span id="tra-ransac-module"></span><h2>tra.ransac module<a class="headerlink" href="#module-tra.ransac" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tra.ransac.RansacFeature">
+<em class="property">class </em><code class="descclassname">tra.ransac.</code><code class="descname">RansacFeature</code><span class="sig-paren">(</span><em>feature</em>, <em>max_it=100</em>, <em>inliers_percent=0.6</em>, <em>threshold=100</em>, <em>dst=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/ransac.html#RansacFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.ransac.RansacFeature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Class for feature detection inside images and videos with
+the RANSAC algorithm</p>
+<dl class="attribute">
+<dt id="tra.ransac.RansacFeature.feature">
+<code class="descname">feature</code><a class="headerlink" href="#tra.ransac.RansacFeature.feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>the feature class</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tra.ransac.RansacFeature.max_it">
+<code class="descname">max_it</code><a class="headerlink" href="#tra.ransac.RansacFeature.max_it" title="Permalink to this definition">¶</a></dt>
+<dd><p>Max Number of iterations for the RANSAC loop</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tra.ransac.RansacFeature.inliers_percent">
+<code class="descname">inliers_percent</code><a class="headerlink" href="#tra.ransac.RansacFeature.inliers_percent" title="Permalink to this definition">¶</a></dt>
+<dd><p>percentage of inliers over total points.Used for stop criteria in the RANSAC loop</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tra.ransac.RansacFeature.threshold">
+<code class="descname">threshold</code><a class="headerlink" href="#tra.ransac.RansacFeature.threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value of threshold used after the image normalization                    (can be an integer from 1 to 254)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tra.ransac.RansacFeature.dst">
+<code class="descname">dst</code><a class="headerlink" href="#tra.ransac.RansacFeature.dst" title="Permalink to this definition">¶</a></dt>
+<dd><p>the distance of the inliers pixels from the feature (i.e.             a pixel is considered an inlier if its distance is &lt; dst)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tra.ransac.RansacFeature.compute_feature">
+<code class="descname">compute_feature</code><span class="sig-paren">(</span><em>pixels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/ransac.html#RansacFeature.compute_feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.ransac.RansacFeature.compute_feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method look for the feature inside a set of points</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> &#8211; the set of points.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The detected feature object
+percent: The percentage of &#8220;fitness&#8221; (i.e inliers/total_points) of the feature detected<blockquote>
+<div>in the image</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#tra.ransac.RansacFeature.feature" title="tra.ransac.RansacFeature.feature">feature</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tra.ransac.RansacFeature.image_search">
+<code class="descname">image_search</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/ransac.html#RansacFeature.image_search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.ransac.RansacFeature.image_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method look for the feature inside a grayscale image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> &#8211; the image where to detect the circle.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The detected feature object
+percent: The percentage of &#8220;fitness&#8221; (i.e inliers/total_points) of the feature detected<blockquote>
+<div>in the image</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#tra.ransac.RansacFeature.feature" title="tra.ransac.RansacFeature.feature">feature</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> &#8211;
+If the thresholded image is completely empty (all pixels intensities
+== 0, a ValueError is raised)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tra.ransac.RansacFeature.video_processing">
+<code class="descname">video_processing</code><span class="sig-paren">(</span><em>videofile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/ransac.html#RansacFeature.video_processing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.ransac.RansacFeature.video_processing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tra">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tra" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">tra package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-tra.features">tra.features module</a></li>
+<li><a class="reference internal" href="#module-tra.ransac">tra.ransac module</a></li>
+<li><a class="reference internal" href="#module-tra">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tra.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Ruben Di Battista.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.2</a>
+      
+      |
+      <a href="_sources/tra.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tra.ransac &mdash; Python RANSAC Library 0.1a documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python RANSAC Library 0.1a documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python RANSAC Library 0.1a documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for tra.ransac</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">n</span>
+<span class="kn">import</span> <span class="nn">numpy.random</span> <span class="kn">as</span> <span class="nn">rnd</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+
+<div class="viewcode-block" id="RansacFeature"><a class="viewcode-back" href="../../tra.html#tra.ransac.RansacFeature">[docs]</a><span class="k">class</span> <span class="nc">RansacFeature</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Class for feature detection inside images and videos with</span>
+<span class="sd">    the RANSAC algorithm</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        feature: the feature class</span>
+<span class="sd">        max_it: Max Number of iterations for the RANSAC loop</span>
+<span class="sd">        inliers_percent: percentage of inliers over total points.\ </span>
+<span class="sd">                         Used for stop criteria in the RANSAC loop</span>
+<span class="sd">        threshold: Value of threshold used after the image normalization \</span>
+<span class="sd">                   (can be an integer from 1 to 254)</span>
+<span class="sd">        dst: the distance of the inliers pixels from the feature (i.e.\</span>
+<span class="sd">             a pixel is considered an inlier if its distance is &lt; dst)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">feature</span><span class="p">,</span><span class="n">max_it</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">inliers_percent</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">dst</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature</span> <span class="o">=</span> <span class="n">feature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_it</span> <span class="o">=</span> <span class="n">max_it</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">inliers_percent</span> <span class="o">=</span> <span class="n">inliers_percent</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dst</span> <span class="o">=</span> <span class="n">dst</span>
+        
+<div class="viewcode-block" id="RansacFeature.compute_feature"><a class="viewcode-back" href="../../tra.html#tra.ransac.RansacFeature.compute_feature">[docs]</a>    <span class="k">def</span> <span class="nf">compute_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pixels</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; This method look for the feature inside a set of points</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            points: the set of points.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            feature: The detected feature object</span>
+<span class="sd">            percent: The percentage of &quot;fitness&quot; (i.e inliers/total_points) of the feature detected</span>
+<span class="sd">                     in the image</span>
+<span class="sd">            </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="c"># -- Starting Loop -- #</span>
+        
+        <span class="c"># Pre-allocating guess points </span>
+        <span class="n">pts</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">min_points</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+        
+        <span class="c"># Starting iterations</span>
+        <span class="n">it</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="c"># Current percent of inliers over the total points</span>
+        <span class="n">percent</span> <span class="o">=</span> <span class="mi">0</span>
+        
+
+        <span class="k">while</span> <span class="ow">not</span><span class="p">(</span><span class="n">percent</span><span class="o">&gt;</span><span class="bp">self</span><span class="o">.</span><span class="n">inliers_percent</span> <span class="ow">or</span> <span class="n">it</span><span class="o">&gt;</span><span class="bp">self</span><span class="o">.</span><span class="n">max_it</span><span class="p">):</span>
+            
+            <span class="c"># Guess three pixels from the non-zero ones</span>
+            <span class="n">pts</span> <span class="o">=</span> <span class="n">pixels</span><span class="p">[</span><span class="n">rnd</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">pixels</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]),</span><span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">min_points</span><span class="p">)]</span>
+            
+          
+            
+            <span class="c"># Generating Circle from the three given points</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">guess_feature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span> <span class="c"># If the three points are collinear the circle cannot be computed</span>
+                <span class="k">continue</span>
+            <span class="c"># Compute distance of all non-zero points from the circumference </span>
+            <span class="n">distances</span> <span class="o">=</span> <span class="n">guess_feature</span><span class="o">.</span><span class="n">points_distance</span><span class="p">(</span><span class="n">pixels</span><span class="p">)</span>
+            
+            <span class="c"># Check which points are inliers (i.e. near the circle)</span>
+            <span class="n">inliers</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">pixels</span><span class="p">[</span><span class="n">distances</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dst</span><span class="p">])</span>
+            
+            <span class="c">#Compute the percentage</span>
+            <span class="n">percent_new</span> <span class="o">=</span> <span class="n">inliers</span><span class="o">/</span><span class="n">n</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">pixels</span><span class="p">)</span>
+            
+            <span class="n">it</span> <span class="o">=</span> <span class="n">it</span><span class="o">+</span><span class="mi">1</span>
+            
+            <span class="k">if</span> <span class="n">percent_new</span> <span class="o">&gt;</span> <span class="n">percent</span><span class="p">:</span>
+                <span class="c"># Update if better approximation</span>
+                <span class="n">percent</span> <span class="o">=</span> <span class="n">percent_new</span>
+                <span class="n">feature</span> <span class="o">=</span> <span class="n">guess_feature</span>
+        
+                
+        <span class="c">#=======================================================================</span>
+        <span class="c"># if it &gt;self.max_it:</span>
+        <span class="c">#     warnings.warn(&#39;&#39;&#39;Max Iterations number reached. The current percentage of fitness is {0}&#39;&#39;&#39;\</span>
+        <span class="c">#                   .format(percent),RuntimeWarning)</span>
+        <span class="c">#=======================================================================s</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">feature</span><span class="p">,</span><span class="n">percent</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="RansacFeature.image_search"><a class="viewcode-back" href="../../tra.html#tra.ransac.RansacFeature.image_search">[docs]</a>    <span class="k">def</span> <span class="nf">image_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">image</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; This method look for the feature inside a grayscale image</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            image: the image where to detect the circle.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            feature: The detected feature object</span>
+<span class="sd">            percent: The percentage of &quot;fitness&quot; (i.e inliers/total_points) of the feature detected</span>
+<span class="sd">                     in the image</span>
+<span class="sd">            </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the thresholded image is completely empty (all pixels intensities</span>
+<span class="sd">                        == 0, a ValueError is raised)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="c">#=======================================================================</span>
+        <span class="c"># TODO: Check if the image is gray</span>
+        <span class="c">#=======================================================================</span>
+
+        
+        <span class="c"># Normalization</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">image</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">norm_type</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">NORM_MINMAX</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="mi">255</span><span class="p">)</span>
+        
+        <span class="c"># Thresholding</span>
+        <span class="n">_ret</span><span class="p">,</span><span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="p">)</span>
+        
+        <span class="c"># Only the non-zero pixels</span>
+        <span class="n">pixels</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">image</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="c">#Thresholded image can be empty</span>
+        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">pixels</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Thresholded image is completely empty.</span><span class="se">\</span>
+<span class="s">                            The threshold argument is too high or the image</span><span class="se">\</span>
+<span class="s">                            is totally black&#39;</span><span class="p">)</span>
+        
+        <span class="c"># Orienting correctly the points in a (n,2) shape</span>
+        <span class="c"># needed because of arguments of Circle.points_distance()</span>
+        <span class="n">pixels</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">]]))</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_feature</span><span class="p">(</span><span class="n">pixels</span><span class="p">)</span>
+        
+    </div>
+<div class="viewcode-block" id="RansacFeature.video_processing"><a class="viewcode-back" href="../../tra.html#tra.ransac.RansacFeature.video_processing">[docs]</a>    <span class="k">def</span> <span class="nf">video_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">videofile</span><span class="p">):</span>
+        <span class="n">video</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">videofile</span><span class="p">)</span>
+        <span class="n">nframes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">video</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FRAME_COUNT</span><span class="p">))</span>
+        
+        <span class="c">#Pre-allocating dataset for feature array</span>
+        <span class="n">fs</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">nframes</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">feature</span><span class="p">)</span>
+        
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">nframes</span><span class="p">):</span>
+            <span class="n">succ</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">video</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">frame</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span><span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">succ</span><span class="p">:</span> <span class="c"># If successfully got the video frame</span>
+                
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">feature</span><span class="p">,</span><span class="n">_percent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_search</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+                    <span class="n">fs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="n">fs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+                
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;Error in retrieving video frames.&quot;</span><span class="p">)</span>
+            
+        <span class="k">return</span> <span class="n">fs</span>        </div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Ruben Di Battista.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.2</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
