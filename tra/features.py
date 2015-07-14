@@ -7,11 +7,7 @@ import scipy.spatial.distance as dist
 class Feature(object):
     '''
     Abstract class that represents a feature to be used
-    with the RansacFeature class in tra.ransac module
-    
-    Attributes:
-        min_points: The minimum points required to compute the feature
-                    (e.g. Circle.min_points = 3)
+    with the RansacFeature class in :py:mod:`tra.ransac` module.
     '''
     
     def __init__(self):
@@ -19,30 +15,33 @@ class Feature(object):
     
     @property
     def min_points(self):
-        '''Min number of points to define the feature'''
+        '''int: Minimum number of points needed to define the feature.'''
+        
+        raise NotImplemented
     
     def points_distance(self,points):
         ''' 
         This function implements a method to compute the distance 
-        of points from the feature
+        of points from the feature.
         
         Args:
-            points: a numpy array of points the distance must be 
-                    computed of
+            points (numpy.ndarray): a numpy array of points the distance must be 
+                    computed of.
         
         Returns: 
-            distance: the computed distance of the points from the
-                      feature
+            distance (numpy.ndarray): the computed distances of the points from the
+                              feature.
         '''
         
         raise NotImplemented
 
 class Circle(Feature):
     ''' 
-    Feature class for a Circle
+    Feature class for a Circle :math:`(x-x_c)^2 + (y-y_c)^2 - r = 0`
     '''
     
     min_points = 3
+    '''int: Minimum number of points needed to define the circle (3).'''
     
     def __init__(self,points):
         self.radius,self.xc,self.yc = self.__gen(points)
@@ -54,18 +53,15 @@ class Circle(Feature):
         circumference given three points
         
         Args:
-            points: a (3,2) numpy array, each row is a 2D Point.
+            points (numpy.array): a (3,2) numpy array, each row is a 2D Point.
         
         Returns: 
-            circle: A (3,) numpy array that contains the circumference radius
+            (tuple): A 3 elements tuple that contains the circumference radius
             and center coordinates [radius,xc,yc]
             
         Raises: 
             RuntimeError: If the circle computation does not succeed
                 a RuntimeError is raised.
-            
-        
-        
     '''            
       
         # Linear system for (D,E,F) in circle 
@@ -87,16 +83,30 @@ class Circle(Feature):
         yc = -E/2
         r = n.sqrt(xc**2+yc**2-F)
 
-        return [r,xc,yc]
+        return (r,xc,yc)
             
     def points_distance(self,points):
+        r'''
+        Compute the distance of the points from the feature
+        
+        :math:`d = \left| \sqrt{(x_i - x_c)^2 + (y_i-y_c)^2} - r \right|`
+        
+        Args:
+            points (numpy.ndarray): a (3,2) numpy array, each row is a 2D Point.
+            
+        Returns: 
+            d (numpy.ndarray): the computed distances of the points from the
+                              feature.
+        
+        '''
+        
         xa = n.array([self.xc,self.yc]).reshape((1,2))
         d = n.abs(dist.cdist(points,xa) - self.radius)
         return d
     
 class Exponential (Feature):
     '''
-    Feature Class for an exponential curve y=a*x**k +b 
+    Feature Class for an exponential curve :math:`y=ax^{k} + b`
     '''
     
     min_points = 3
@@ -115,7 +125,7 @@ class Exponential (Feature):
         
         Returns: 
             exp: A (3,) numpy array that contains the a,n,b parameters
-            [a,n,b]
+            [a,k,b]
             
         Raises: 
             RuntimeError: If the circle computation does not succeed
@@ -125,6 +135,9 @@ class Exponential (Feature):
         
     '''
         def exponential(x,points):
+            ''' Non linear system function to use 
+            with :py:func:`scypy.optimize.root`
+            '''
             aa = x[0]
             nn = x[1]
             bb = x[2]
@@ -142,10 +155,23 @@ class Exponential (Feature):
 
             
     def points_distance(self,points):
+        r'''
+        Compute the distance of the points from the feature
+        
+        :math:`d = \sqrt{(x_i - x_c)^2 + (y_i-y_c)^2}`
+        
+        Args:
+            points (numpy.ndarray): a (3,2) numpy array, each row is a 2D Point.
+            
+        Returns: 
+            d (numpy.ndarray): the computed distances of the points from the
+                              feature.
+        
+        '''
         x = points[:,0]
         xa = n.array([x,self.a*n.power(x,self.k)+self.b])
         xa = xa.T
-        d = n.abs(dist.cdist(points,xa))
+        d = dist.cdist(points,xa)        
         return n.diag(d)
     
     

@@ -29,15 +29,15 @@ class RansacFeature(object):
         self.dst = dst
         
     def compute_feature(self,pixels):
-        ''' This method look for the feature inside a set of points
+        ''' This method look for the feature inside a set of points.
         
         Args:
             points: the set of points.
             
         Returns:
-            feature: The detected feature object
+            feature: The detected feature object.
             percent: The percentage of "fitness" (i.e inliers/total_points) of the feature detected
-                     in the image
+                     in the image.
             
         '''
         
@@ -90,19 +90,21 @@ class RansacFeature(object):
         return (feature,percent)
     
     def image_search(self,image):
-        ''' This method look for the feature inside a grayscale image
+        ''' This method look for the feature inside a grayscale image.
         
         Args:
             image: the image where to detect the circle.
 
         Returns:
-            feature: The detected feature object
-            percent: The percentage of "fitness" (i.e inliers/total_points) of the feature detected
-                     in the image
+            (tuple): tuple containing:
+                    
+                    feature (tra.ransac.RansacFeature.feature): the feature detected
+                    percent (float): the percentage of 'fitness' (i.e.inliers/total_points)
+                        of the detected feature
             
         Raises:
             ValueError: If the thresholded image is completely empty (all pixels intensities
-                        == 0, a ValueError is raised)
+                        == 0, a ValueError is raised).
         '''
         
         #=======================================================================
@@ -133,6 +135,20 @@ class RansacFeature(object):
         
     
     def video_processing(self,videofile):
+        ''' This method look for the feature inside each frame of 
+        a video. 
+        
+        Args:
+            videofile (str): path string of the video file.
+
+        Returns:
+            fs (numpy.array): the array of features detected
+
+            
+        Raises:
+            ValueError: If the thresholded image is completely empty (all pixels intensities
+                        == 0, a ValueError is raised).
+        '''
         video = cv2.VideoCapture(videofile)
         nframes = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
         
