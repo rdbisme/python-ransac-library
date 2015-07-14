@@ -137,8 +137,8 @@ class Exponential (Feature):
             return f
         
 
-        p = opt.root(exponential,[1,1,1],points,method='lm')['x']
-        return p
+        exp = opt.root(exponential,[1,1,1],points,method='lm')['x']
+        return exp
 
             
     def points_distance(self,points):
