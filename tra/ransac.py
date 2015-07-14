@@ -8,17 +8,17 @@ import warnings
 class RansacFeature(object):
     '''
     Class for feature detection inside images and videos with
-    the RANSAC algorithm
+    the :abbr:`RANSAC (Random Sample Consensus)` algorithm.
     
     Attributes:
-        feature: the feature class
-        max_it: Max Number of iterations for the RANSAC loop
-        inliers_percent: percentage of inliers over total points.\ 
-                         Used for stop criteria in the RANSAC loop
-        threshold: Value of threshold used after the image normalization \
-                   (can be an integer from 1 to 254)
-        dst: the distance of the inliers pixels from the feature (i.e.\
-             a pixel is considered an inlier if its distance is < dst)
+        feature(:py:class:`tra.ransac.Feature`): the feature class.
+        max_it(int): Max Number of iterations for the RANSAC loop.
+        inliers_percent(float): percentage of inliers over total points.\ 
+                         Used for stop criteria in the RANSAC loop.
+        threshold(int): Value of threshold used after the image normalization \
+                   (can be an integer from 1 to 254).
+        dst(float): the distance of the inliers pixels from the feature (i.e.\
+             a pixel is considered an inlier if its distance is < dst).
     '''
     
     def __init__(self,feature,max_it=100,inliers_percent=0.6, threshold = 100, dst = 10):
@@ -28,16 +28,19 @@ class RansacFeature(object):
         self.threshold = threshold
         self.dst = dst
         
-    def compute_feature(self,pixels):
+    def detect_feature(self,pixels):
         ''' This method look for the feature inside a set of points.
         
         Args:
-            points: the set of points.
+            points(:py:class:`numpy.ndarray`): a (n,n)-shaped numpy array of points.
             
         Returns:
-            feature: The detected feature object.
-            percent: The percentage of "fitness" (i.e inliers/total_points) of the feature detected
-                     in the image.
+            (list): A list containing:
+            
+                feature(:py:class:`tra.features.Feature`): The detected feature object.
+                
+                percent: The percentage of "fitness" (i.e inliers/total_points) of the feature detected \
+                    in the image.
             
         '''
         
@@ -96,15 +99,14 @@ class RansacFeature(object):
             image: the image where to detect the circle.
 
         Returns:
-            (tuple): tuple containing:
-                    
-                    feature (tra.ransac.RansacFeature.feature): the feature detected
-                    percent (float): the percentage of 'fitness' (i.e.inliers/total_points)
-                        of the detected feature
+            (tuple): tuple containing:                    
+                feature (tra.ransac.RansacFeature.feature): the feature detected
+                percent (float): the percentage of 'fitness' (i.e.inliers/total_points)
+                of the detected feature
             
         Raises:
             ValueError: If the thresholded image is completely empty (all pixels intensities
-                        == 0, a ValueError is raised).
+                == 0, a ValueError is raised).
         '''
         
         #=======================================================================
@@ -131,7 +133,7 @@ class RansacFeature(object):
         # needed because of arguments of Circle.points_distance()
         pixels = n.transpose(n.vstack([pixels[0],pixels[1]]))
         
-        return self.compute_feature(pixels)
+        return self.detect_feature(pixels)
         
     
     def video_processing(self,videofile):

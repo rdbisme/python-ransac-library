@@ -109,17 +109,17 @@
 <div class="viewcode-block" id="RansacFeature"><a class="viewcode-back" href="../../tra.html#tra.ransac.RansacFeature">[docs]</a><span class="k">class</span> <span class="nc">RansacFeature</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Class for feature detection inside images and videos with</span>
-<span class="sd">    the RANSAC algorithm</span>
+<span class="sd">    the :abbr:`RANSAC (Random Sample Consensus)` algorithm.</span>
 <span class="sd">    </span>
 <span class="sd">    Attributes:</span>
-<span class="sd">        feature: the feature class</span>
-<span class="sd">        max_it: Max Number of iterations for the RANSAC loop</span>
-<span class="sd">        inliers_percent: percentage of inliers over total points.\ </span>
-<span class="sd">                         Used for stop criteria in the RANSAC loop</span>
-<span class="sd">        threshold: Value of threshold used after the image normalization \</span>
-<span class="sd">                   (can be an integer from 1 to 254)</span>
-<span class="sd">        dst: the distance of the inliers pixels from the feature (i.e.\</span>
-<span class="sd">             a pixel is considered an inlier if its distance is &lt; dst)</span>
+<span class="sd">        feature(:py:class:`tra.ransac.Feature`): the feature class.</span>
+<span class="sd">        max_it(int): Max Number of iterations for the RANSAC loop.</span>
+<span class="sd">        inliers_percent(float): percentage of inliers over total points.\ </span>
+<span class="sd">                         Used for stop criteria in the RANSAC loop.</span>
+<span class="sd">        threshold(int): Value of threshold used after the image normalization \</span>
+<span class="sd">                   (can be an integer from 1 to 254).</span>
+<span class="sd">        dst(float): the distance of the inliers pixels from the feature (i.e.\</span>
+<span class="sd">             a pixel is considered an inlier if its distance is &lt; dst).</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">feature</span><span class="p">,</span><span class="n">max_it</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">inliers_percent</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">dst</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
@@ -129,16 +129,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dst</span> <span class="o">=</span> <span class="n">dst</span>
         
-<div class="viewcode-block" id="RansacFeature.compute_feature"><a class="viewcode-back" href="../../tra.html#tra.ransac.RansacFeature.compute_feature">[docs]</a>    <span class="k">def</span> <span class="nf">compute_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pixels</span><span class="p">):</span>
+<div class="viewcode-block" id="RansacFeature.detect_feature"><a class="viewcode-back" href="../../tra.html#tra.ransac.RansacFeature.detect_feature">[docs]</a>    <span class="k">def</span> <span class="nf">detect_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pixels</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; This method look for the feature inside a set of points.</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            points: the set of points.</span>
+<span class="sd">            points(:py:class:`numpy.ndarray`): a (n,n)-shaped numpy array of points.</span>
 <span class="sd">            </span>
 <span class="sd">        Returns:</span>
-<span class="sd">            feature: The detected feature object.</span>
-<span class="sd">            percent: The percentage of &quot;fitness&quot; (i.e inliers/total_points) of the feature detected</span>
-<span class="sd">                     in the image.</span>
+<span class="sd">            (list): A list containing:</span>
+<span class="sd">            </span>
+<span class="sd">                feature(:py:class:`tra.features.Feature`): The detected feature object.</span>
+<span class="sd">                </span>
+<span class="sd">                percent: The percentage of &quot;fitness&quot; (i.e inliers/total_points) of the feature detected \</span>
+<span class="sd">                    in the image.</span>
 <span class="sd">            </span>
 <span class="sd">        &#39;&#39;&#39;</span>
         
@@ -197,15 +200,14 @@
 <span class="sd">            image: the image where to detect the circle.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (tuple): tuple containing:</span>
-<span class="sd">                    </span>
-<span class="sd">                    feature (tra.ransac.RansacFeature.feature): the feature detected</span>
-<span class="sd">                    percent (float): the percentage of &#39;fitness&#39; (i.e.inliers/total_points)</span>
-<span class="sd">                        of the detected feature</span>
+<span class="sd">            (tuple): tuple containing:                    </span>
+<span class="sd">                feature (tra.ransac.RansacFeature.feature): the feature detected</span>
+<span class="sd">                percent (float): the percentage of &#39;fitness&#39; (i.e.inliers/total_points)</span>
+<span class="sd">                of the detected feature</span>
 <span class="sd">            </span>
 <span class="sd">        Raises:</span>
 <span class="sd">            ValueError: If the thresholded image is completely empty (all pixels intensities</span>
-<span class="sd">                        == 0, a ValueError is raised).</span>
+<span class="sd">                == 0, a ValueError is raised).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         
         <span class="c">#=======================================================================</span>
@@ -232,7 +234,7 @@
         <span class="c"># needed because of arguments of Circle.points_distance()</span>
         <span class="n">pixels</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">]]))</span>
         
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_feature</span><span class="p">(</span><span class="n">pixels</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">detect_feature</span><span class="p">(</span><span class="n">pixels</span><span class="p">)</span>
         
     </div>
 <div class="viewcode-block" id="RansacFeature.video_processing"><a class="viewcode-back" href="../../tra.html#tra.ransac.RansacFeature.video_processing">[docs]</a>    <span class="k">def</span> <span class="nf">video_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">videofile</span><span class="p">):</span>

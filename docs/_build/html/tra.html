@@ -124,14 +124,12 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<em>numpy.ndarray</em>) &#8211; a (3,2) numpy array, each row is a 2D Point.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><code class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></code></a>) &#8211; a (3,2) numpy array, each row is a 2D Point.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>d</strong> &#8211;
-the computed distances of the points from the<blockquote>
-<div>feature.</div></blockquote>
-</td>
+the computed distances of the points from the feature.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><code class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -158,14 +156,12 @@ the computed distances of the points from the<blockquote>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<em>numpy.ndarray</em>) &#8211; a (3,2) numpy array, each row is a 2D Point.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; a (3,2) numpy array, each row is a 2D Point.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>d</strong> &#8211;
-the computed distances of the points from the<blockquote>
-<div>feature.</div></blockquote>
-</td>
+the computed distances of the points from the feature.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -176,9 +172,9 @@ the computed distances of the points from the<blockquote>
 <dl class="class">
 <dt id="tra.features.Feature">
 <em class="property">class </em><code class="descclassname">tra.features.</code><code class="descname">Feature</code><a class="reference internal" href="_modules/tra/features.html#Feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.features.Feature" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2.7/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <p>Abstract class that represents a feature to be used
-with the RansacFeature class in <a class="reference internal" href="#module-tra.ransac" title="tra.ransac"><code class="xref py py-mod docutils literal"><span class="pre">tra.ransac</span></code></a> module.</p>
+with <a class="reference internal" href="#tra.ransac.RansacFeature" title="tra.ransac.RansacFeature"><code class="xref py py-class docutils literal"><span class="pre">tra.ransac.RansacFeature</span></code></a></p>
 <dl class="attribute">
 <dt id="tra.features.Feature.min_points">
 <code class="descname">min_points</code><a class="headerlink" href="#tra.features.Feature.min_points" title="Permalink to this definition">¶</a></dt>
@@ -194,15 +190,13 @@ of points from the feature.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<em>numpy.ndarray</em>) &#8211; a numpy array of points the distance must be
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> &#8211; a numpy array of points the distance must be
 computed of.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>distance</strong> &#8211;
-the computed distances of the points from the<blockquote>
-<div>feature.</div></blockquote>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>distances</strong> &#8211;
+the computed distances of the points from the feature.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><code class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -216,55 +210,59 @@ the computed distances of the points from the<blockquote>
 <dl class="class">
 <dt id="tra.ransac.RansacFeature">
 <em class="property">class </em><code class="descclassname">tra.ransac.</code><code class="descname">RansacFeature</code><span class="sig-paren">(</span><em>feature</em>, <em>max_it=100</em>, <em>inliers_percent=0.6</em>, <em>threshold=100</em>, <em>dst=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/ransac.html#RansacFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.ransac.RansacFeature" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2.7/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <p>Class for feature detection inside images and videos with
-the RANSAC algorithm</p>
+the <abbr title="Random Sample Consensus">RANSAC</abbr> algorithm.</p>
 <dl class="attribute">
 <dt id="tra.ransac.RansacFeature.feature">
 <code class="descname">feature</code><a class="headerlink" href="#tra.ransac.RansacFeature.feature" title="Permalink to this definition">¶</a></dt>
-<dd><p>the feature class</p>
+<dd><p><code class="xref py py-class docutils literal"><span class="pre">tra.ransac.Feature</span></code></p>
+<p>the feature class.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="tra.ransac.RansacFeature.max_it">
 <code class="descname">max_it</code><a class="headerlink" href="#tra.ransac.RansacFeature.max_it" title="Permalink to this definition">¶</a></dt>
-<dd><p>Max Number of iterations for the RANSAC loop</p>
+<dd><p><em>int</em></p>
+<p>Max Number of iterations for the RANSAC loop.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="tra.ransac.RansacFeature.inliers_percent">
 <code class="descname">inliers_percent</code><a class="headerlink" href="#tra.ransac.RansacFeature.inliers_percent" title="Permalink to this definition">¶</a></dt>
-<dd><p>percentage of inliers over total points.Used for stop criteria in the RANSAC loop</p>
+<dd><p><em>float</em></p>
+<p>percentage of inliers over total points.Used for stop criteria in the RANSAC loop.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="tra.ransac.RansacFeature.threshold">
 <code class="descname">threshold</code><a class="headerlink" href="#tra.ransac.RansacFeature.threshold" title="Permalink to this definition">¶</a></dt>
-<dd><p>Value of threshold used after the image normalization                    (can be an integer from 1 to 254)</p>
+<dd><p><em>int</em></p>
+<p>Value of threshold used after the image normalization                    (can be an integer from 1 to 254).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="tra.ransac.RansacFeature.dst">
 <code class="descname">dst</code><a class="headerlink" href="#tra.ransac.RansacFeature.dst" title="Permalink to this definition">¶</a></dt>
-<dd><p>the distance of the inliers pixels from the feature (i.e.             a pixel is considered an inlier if its distance is &lt; dst)</p>
+<dd><p><em>float</em></p>
+<p>the distance of the inliers pixels from the feature (i.e.             a pixel is considered an inlier if its distance is &lt; dst).</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="tra.ransac.RansacFeature.compute_feature">
-<code class="descname">compute_feature</code><span class="sig-paren">(</span><em>pixels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/ransac.html#RansacFeature.compute_feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.ransac.RansacFeature.compute_feature" title="Permalink to this definition">¶</a></dt>
+<dt id="tra.ransac.RansacFeature.detect_feature">
+<code class="descname">detect_feature</code><span class="sig-paren">(</span><em>pixels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/ransac.html#RansacFeature.detect_feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.ransac.RansacFeature.detect_feature" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method look for the feature inside a set of points.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> &#8211; the set of points.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><code class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></code></a>) &#8211; a (n,n)-shaped numpy array of points.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The detected feature object.
-percent: The percentage of &#8220;fitness&#8221; (i.e inliers/total_points) of the feature detected<blockquote>
-<div>in the image.</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list containing:<p>feature(<a class="reference internal" href="#tra.features.Feature" title="tra.features.Feature"><code class="xref py py-class docutils literal"><span class="pre">tra.features.Feature</span></code></a>): The detected feature object.</p>
+<p>percent: The percentage of &#8220;fitness&#8221; (i.e inliers/total_points) of the feature detected                     in the image.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#tra.ransac.RansacFeature.feature" title="tra.ransac.RansacFeature.feature">feature</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(list)</td>
 </tr>
 </tbody>
 </table>
@@ -280,11 +278,10 @@ percent: The percentage of &#8220;fitness&#8221; (i.e inliers/total_points) of t
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> &#8211; the image where to detect the circle.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">tuple containing:<p>feature (tra.ransac.RansacFeature.feature): the feature detected
-percent (float): the percentage of &#8216;fitness&#8217; (i.e.inliers/total_points)</p>
-<blockquote>
-<div>of the detected feature</div></blockquote>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">tuple containing:
+feature (tra.ransac.RansacFeature.feature): the feature detected
+percent (float): the percentage of &#8216;fitness&#8217; (i.e.inliers/total_points)
+of the detected feature</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(tuple)</td>
 </tr>
@@ -305,12 +302,12 @@ a video.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>videofile</strong> (<em>str</em>) &#8211; path string of the video file.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>videofile</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; path string of the video file.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>fs</strong> &#8211;
 the array of features detected</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.array</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.9)">numpy.array</a></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> &#8211;
 If the thresholded image is completely empty (all pixels intensities

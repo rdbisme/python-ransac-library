@@ -7,7 +7,7 @@ import scipy.spatial.distance as dist
 class Feature(object):
     '''
     Abstract class that represents a feature to be used
-    with the RansacFeature class in :py:mod:`tra.ransac` module.
+    with :py:class:`tra.ransac.RansacFeature`
     '''
     
     def __init__(self):
@@ -25,12 +25,11 @@ class Feature(object):
         of points from the feature.
         
         Args:
-            points (numpy.ndarray): a numpy array of points the distance must be 
+            points: a numpy array of points the distance must be 
                     computed of.
         
         Returns: 
-            distance (numpy.ndarray): the computed distances of the points from the
-                              feature.
+            distances (:py:class:`numpy.ndarray`): the computed distances of the points from the feature.
         '''
         
         raise NotImplemented
@@ -53,11 +52,11 @@ class Circle(Feature):
         circumference given three points
         
         Args:
-            points (numpy.array): a (3,2) numpy array, each row is a 2D Point.
+            points (:py:class:`numpy.ndarray`): a (3,2) numpy array, each row is a 2D Point.
         
         Returns: 
             (tuple): A 3 elements tuple that contains the circumference radius
-            and center coordinates [radius,xc,yc]
+                and center coordinates [radius,xc,yc]
             
         Raises: 
             RuntimeError: If the circle computation does not succeed
@@ -92,11 +91,10 @@ class Circle(Feature):
         :math:`d = \left| \sqrt{(x_i - x_c)^2 + (y_i-y_c)^2} - r \right|`
         
         Args:
-            points (numpy.ndarray): a (3,2) numpy array, each row is a 2D Point.
+            points (:py:class:`numpy.ndarray`): a (3,2) numpy array, each row is a 2D Point.
             
-        Returns: 
-            d (numpy.ndarray): the computed distances of the points from the
-                              feature.
+        Returns:
+            d (:py:class:`numpy.ndarray`): the computed distances of the points from the feature.
         
         '''
         
@@ -121,10 +119,10 @@ class Exponential (Feature):
         exponential curve
         
         Args:
-            points: a (3,2) numpy array, each row is a 2D Point.
+            points(:py:class:`numpy.ndarray`): a (3,2) numpy array, each row is a 2D Point.
         
         Returns: 
-            exp: A (3,) numpy array that contains the a,n,b parameters
+            exp(:py:class:`numpy.ndarray`): A (3,) numpy array that contains the a,n,b parameters
             [a,k,b]
             
         Raises: 
@@ -164,8 +162,7 @@ class Exponential (Feature):
             points (numpy.ndarray): a (3,2) numpy array, each row is a 2D Point.
             
         Returns: 
-            d (numpy.ndarray): the computed distances of the points from the
-                              feature.
+            d (numpy.ndarray): the computed distances of the points from the feature.
         
         '''
         x = points[:,0]

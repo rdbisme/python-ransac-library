@@ -108,7 +108,7 @@
 <div class="viewcode-block" id="Feature"><a class="viewcode-back" href="../../tra.html#tra.features.Feature">[docs]</a><span class="k">class</span> <span class="nc">Feature</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Abstract class that represents a feature to be used</span>
-<span class="sd">    with the RansacFeature class in :py:mod:`tra.ransac` module.</span>
+<span class="sd">    with :py:class:`tra.ransac.RansacFeature`</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -126,12 +126,11 @@
 <span class="sd">        of points from the feature.</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            points (numpy.ndarray): a numpy array of points the distance must be </span>
+<span class="sd">            points: a numpy array of points the distance must be </span>
 <span class="sd">                    computed of.</span>
 <span class="sd">        </span>
 <span class="sd">        Returns: </span>
-<span class="sd">            distance (numpy.ndarray): the computed distances of the points from the</span>
-<span class="sd">                              feature.</span>
+<span class="sd">            distances (:py:class:`numpy.ndarray`): the computed distances of the points from the feature.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         
         <span class="k">raise</span> <span class="bp">NotImplemented</span>
@@ -154,11 +153,11 @@
 <span class="sd">        circumference given three points</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            points (numpy.array): a (3,2) numpy array, each row is a 2D Point.</span>
+<span class="sd">            points (:py:class:`numpy.ndarray`): a (3,2) numpy array, each row is a 2D Point.</span>
 <span class="sd">        </span>
 <span class="sd">        Returns: </span>
 <span class="sd">            (tuple): A 3 elements tuple that contains the circumference radius</span>
-<span class="sd">            and center coordinates [radius,xc,yc]</span>
+<span class="sd">                and center coordinates [radius,xc,yc]</span>
 <span class="sd">            </span>
 <span class="sd">        Raises: </span>
 <span class="sd">            RuntimeError: If the circle computation does not succeed</span>
@@ -193,11 +192,10 @@
 <span class="sd">        :math:`d = \left| \sqrt{(x_i - x_c)^2 + (y_i-y_c)^2} - r \right|`</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            points (numpy.ndarray): a (3,2) numpy array, each row is a 2D Point.</span>
+<span class="sd">            points (:py:class:`numpy.ndarray`): a (3,2) numpy array, each row is a 2D Point.</span>
 <span class="sd">            </span>
-<span class="sd">        Returns: </span>
-<span class="sd">            d (numpy.ndarray): the computed distances of the points from the</span>
-<span class="sd">                              feature.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            d (:py:class:`numpy.ndarray`): the computed distances of the points from the feature.</span>
 <span class="sd">        </span>
 <span class="sd">        &#39;&#39;&#39;</span>
         
@@ -222,10 +220,10 @@
 <span class="sd">        exponential curve</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            points: a (3,2) numpy array, each row is a 2D Point.</span>
+<span class="sd">            points(:py:class:`numpy.ndarray`): a (3,2) numpy array, each row is a 2D Point.</span>
 <span class="sd">        </span>
 <span class="sd">        Returns: </span>
-<span class="sd">            exp: A (3,) numpy array that contains the a,n,b parameters</span>
+<span class="sd">            exp(:py:class:`numpy.ndarray`): A (3,) numpy array that contains the a,n,b parameters</span>
 <span class="sd">            [a,k,b]</span>
 <span class="sd">            </span>
 <span class="sd">        Raises: </span>
@@ -265,8 +263,7 @@
 <span class="sd">            points (numpy.ndarray): a (3,2) numpy array, each row is a 2D Point.</span>
 <span class="sd">            </span>
 <span class="sd">        Returns: </span>
-<span class="sd">            d (numpy.ndarray): the computed distances of the points from the</span>
-<span class="sd">                              feature.</span>
+<span class="sd">            d (numpy.ndarray): the computed distances of the points from the feature.</span>
 <span class="sd">        </span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">points</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
