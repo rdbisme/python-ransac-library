@@ -1,4 +1,5 @@
 video/
+docs/_build/
 *.pdf
 *.jpg
 *.png
