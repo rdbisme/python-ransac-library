@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tra.features &mdash; Python RANSAC Library 0.1a documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Python RANSAC Library 0.1a documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../index.html" class="fa fa-home"> Python RANSAC Library</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="simple">
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">Python RANSAC Library</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>tra.features</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for tra.features</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">n</span>
+<span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="kn">as</span> <span class="nn">linalg</span>
+<span class="kn">import</span> <span class="nn">scipy.optimize</span> <span class="kn">as</span> <span class="nn">opt</span>
+<span class="kn">import</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">as</span> <span class="nn">dist</span>
+
+<div class="viewcode-block" id="Feature"><a class="viewcode-back" href="../../tra.html#tra.features.Feature">[docs]</a><span class="k">class</span> <span class="nc">Feature</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Abstract class that represents a feature to be used</span>
+<span class="sd">    with :py:class:`tra.ransac.RansacFeature`</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="bp">NotImplemented</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">min_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;int: Minimum number of points needed to define the feature.&#39;&#39;&#39;</span>
+        
+        <span class="k">raise</span> <span class="bp">NotImplemented</span>
+    
+<div class="viewcode-block" id="Feature.points_distance"><a class="viewcode-back" href="../../tra.html#tra.features.Feature.points_distance">[docs]</a>    <span class="k">def</span> <span class="nf">points_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">points</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">        This function implements a method to compute the distance </span>
+<span class="sd">        of points from the feature.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            points: a numpy array of points the distance must be </span>
+<span class="sd">                    computed of.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns: </span>
+<span class="sd">            distances (numpy.ndarray): the computed distances of the points from the feature.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="k">raise</span> <span class="bp">NotImplemented</span>
+</div></div>
+<div class="viewcode-block" id="Circle"><a class="viewcode-back" href="../../tra.html#tra.features.Circle">[docs]</a><span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="n">Feature</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">    Feature class for a Circle :math:`(x-x_c)^2 + (y-y_c)^2 - r = 0`</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="n">min_points</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="sd">&#39;&#39;&#39;int: Minimum number of points needed to define the circle (3).&#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">points</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">xc</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">yc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__gen</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+    
+
+    <span class="k">def</span> <span class="nf">__gen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">points</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Compute the radius and the center coordinates of a </span>
+<span class="sd">        circumference given three points</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            points (numpy.ndarray): a (3,2) numpy array, each row is a 2D Point.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns: </span>
+<span class="sd">            (tuple): A 3 elements tuple that contains the circumference radius</span>
+<span class="sd">                and center coordinates [radius,xc,yc]</span>
+<span class="sd">            </span>
+<span class="sd">        Raises: </span>
+<span class="sd">            RuntimeError: If the circle computation does not succeed</span>
+<span class="sd">                a RuntimeError is raised.</span>
+<span class="sd">    &#39;&#39;&#39;</span>            
+      
+        <span class="c"># Linear system for (D,E,F) in circle </span>
+        <span class="c"># equation: D*x + E*y + F = -(x**2 + y**2)</span>
+        
+        <span class="c"># Generating A matrix </span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">points</span><span class="p">])</span>
+        <span class="c"># Generating rhs</span>
+        <span class="n">rhs</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">points</span><span class="p">])</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c">#Solving linear system</span>
+            <span class="n">D</span><span class="p">,</span><span class="n">E</span><span class="p">,</span><span class="n">F</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">rhs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="n">linalg</span><span class="o">.</span><span class="n">LinAlgError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;Circle calculation not successful. Please</span><span class="se">\</span>
+<span class="s">             check the input data, probable collinear points&#39;</span><span class="p">)</span>
+            
+        <span class="n">xc</span> <span class="o">=</span> <span class="o">-</span><span class="n">D</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">yc</span> <span class="o">=</span> <span class="o">-</span><span class="n">E</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">xc</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">yc</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">F</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">xc</span><span class="p">,</span><span class="n">yc</span><span class="p">)</span>
+            
+<div class="viewcode-block" id="Circle.points_distance"><a class="viewcode-back" href="../../tra.html#tra.features.Circle.points_distance">[docs]</a>    <span class="k">def</span> <span class="nf">points_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">points</span><span class="p">):</span>
+        <span class="sd">r&#39;&#39;&#39;</span>
+<span class="sd">        Compute the distance of the points from the feature</span>
+<span class="sd">        </span>
+<span class="sd">        :math:`d = \left| \sqrt{(x_i - x_c)^2 + (y_i-y_c)^2} - r \right|`</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            points (numpy.ndarray): a (3,2) numpy array, each row is a 2D Point.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            d (numpy.ndarray): the computed distances of the points from the feature.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="n">xa</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">xc</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">yc</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">xa</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span>
+    </div></div>
+<div class="viewcode-block" id="Exponential"><a class="viewcode-back" href="../../tra.html#tra.features.Exponential">[docs]</a><span class="k">class</span> <span class="nc">Exponential</span> <span class="p">(</span><span class="n">Feature</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Feature Class for an exponential curve :math:`y=ax^{k} + b`</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="n">min_points</span> <span class="o">=</span> <span class="mi">3</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">points</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__gen</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+    
+
+    <span class="k">def</span> <span class="nf">__gen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">points</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Compute the three parameters that univocally determine the</span>
+<span class="sd">        exponential curve</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            points(numpy.ndarray): a (3,2) numpy array, each row is a 2D Point.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns: </span>
+<span class="sd">            exp(numpy.ndarray): A (3,) numpy array that contains the a,n,b parameters</span>
+<span class="sd">            [a,k,b]</span>
+<span class="sd">            </span>
+<span class="sd">        Raises: </span>
+<span class="sd">            RuntimeError: If the circle computation does not succeed</span>
+<span class="sd">                a RuntimeError is raised.</span>
+<span class="sd">            </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+        <span class="k">def</span> <span class="nf">exponential</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">points</span><span class="p">):</span>
+            <span class="sd">&#39;&#39;&#39; Non linear system function to use </span>
+<span class="sd">            with :py:func:`scypy.optimize.root`</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+            <span class="n">aa</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">nn</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">bb</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            
+            <span class="n">f</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span>
+            <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">aa</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">nn</span><span class="p">)</span><span class="o">+</span><span class="n">bb</span> <span class="o">-</span> <span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">aa</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">nn</span><span class="p">)</span><span class="o">+</span><span class="n">bb</span> <span class="o">-</span> <span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">f</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">aa</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">nn</span><span class="p">)</span><span class="o">+</span><span class="n">bb</span> <span class="o">-</span> <span class="n">points</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+            
+            <span class="k">return</span> <span class="n">f</span>
+        
+
+        <span class="n">exp</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">exponential</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">points</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s">&#39;lm&#39;</span><span class="p">)[</span><span class="s">&#39;x&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">exp</span>
+
+            
+<div class="viewcode-block" id="Exponential.points_distance"><a class="viewcode-back" href="../../tra.html#tra.features.Exponential.points_distance">[docs]</a>    <span class="k">def</span> <span class="nf">points_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">points</span><span class="p">):</span>
+        <span class="sd">r&#39;&#39;&#39;</span>
+<span class="sd">        Compute the distance of the points from the feature</span>
+<span class="sd">        </span>
+<span class="sd">        :math:`d = \sqrt{(x_i - x_c)^2 + (y_i-y_c)^2}`</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            points (numpy.ndarray): a (3,2) numpy array, each row is a 2D Point.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns: </span>
+<span class="sd">            d (numpy.ndarray): the computed distances of the points from the feature.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">points</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">xa</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">*</span><span class="n">n</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">])</span>
+        <span class="n">xa</span> <span class="o">=</span> <span class="n">xa</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">xa</span><span class="p">)</span>        
+        <span class="k">return</span> <span class="n">n</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    
+    </div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Ruben Di Battista.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1a',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
