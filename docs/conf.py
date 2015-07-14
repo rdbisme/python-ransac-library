@@ -291,4 +291,4 @@ texinfo_documents = [
 #texinfo_no_detailmenu = False
 
 # Intersphinx libraries
-intersphinx_mapping = {'python': ('https://docs.python.org/2.7', None),'numpy':('http://docs.scipy.org/doc/numpy',None)}
+intersphinx_mapping = {'numpy':('http://docs.scipy.org/doc/numpy',None)}

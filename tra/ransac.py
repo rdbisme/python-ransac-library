@@ -11,7 +11,7 @@ class RansacFeature(object):
     the :abbr:`RANSAC (Random Sample Consensus)` algorithm.
     
     Attributes:
-        feature(:py:class:`tra.ransac.Feature`): the feature class.
+        feature(:py:class:`tra.features.Feature`): the feature class.
         max_it(int): Max Number of iterations for the RANSAC loop.
         inliers_percent(float): percentage of inliers over total points.\ 
                          Used for stop criteria in the RANSAC loop.
@@ -32,14 +32,14 @@ class RansacFeature(object):
         ''' This method look for the feature inside a set of points.
         
         Args:
-            points(:py:class:`numpy.ndarray`): a (n,n)-shaped numpy array of points.
+            points(numpy.ndarray): a (n,n)-shaped numpy array of points.
             
         Returns:
-            (list): A list containing:
+            (list): list containing:
             
-                feature(:py:class:`tra.features.Feature`): The detected feature object.
+                feature(:py:attr:`tra.ransac.RansacFeature.feature`): The detected feature object.
                 
-                percent: The percentage of "fitness" (i.e inliers/total_points) of the feature detected \
+                percent(float): The percentage of "fitness" (i.e inliers/total_points) of the feature detected \
                     in the image.
             
         '''
@@ -96,11 +96,13 @@ class RansacFeature(object):
         ''' This method look for the feature inside a grayscale image.
         
         Args:
-            image: the image where to detect the circle.
+            image(numpy.ndarray): the image where to detect the circle.
 
         Returns:
-            (tuple): tuple containing:                    
-                feature (tra.ransac.RansacFeature.feature): the feature detected
+            (list): list containing:
+            
+                feature (:py:class:`tra.ransac.RansacFeature.feature`): The detected feature object
+                
                 percent (float): the percentage of 'fitness' (i.e.inliers/total_points)
                 of the detected feature
             
@@ -144,7 +146,7 @@ class RansacFeature(object):
             videofile (str): path string of the video file.
 
         Returns:
-            fs (numpy.array): the array of features detected
+            fs (numpy.ndarray): the array of features detected
 
             
         Raises:

@@ -124,12 +124,12 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><code class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></code></a>) &#8211; a (3,2) numpy array, each row is a 2D Point.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; a (3,2) numpy array, each row is a 2D Point.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>d</strong> &#8211;
 the computed distances of the points from the feature.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><code class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -196,7 +196,7 @@ computed of.</td>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>distances</strong> &#8211;
 the computed distances of the points from the feature.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><code class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -216,7 +216,7 @@ the <abbr title="Random Sample Consensus">RANSAC</abbr> algorithm.</p>
 <dl class="attribute">
 <dt id="tra.ransac.RansacFeature.feature">
 <code class="descname">feature</code><a class="headerlink" href="#tra.ransac.RansacFeature.feature" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="xref py py-class docutils literal"><span class="pre">tra.ransac.Feature</span></code></p>
+<dd><p><a class="reference internal" href="#tra.features.Feature" title="tra.features.Feature"><code class="xref py py-class docutils literal"><span class="pre">tra.features.Feature</span></code></a></p>
 <p>the feature class.</p>
 </dd></dl>
 
@@ -256,10 +256,10 @@ the <abbr title="Random Sample Consensus">RANSAC</abbr> algorithm.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><code class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></code></a>) &#8211; a (n,n)-shaped numpy array of points.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; a (n,n)-shaped numpy array of points.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list containing:<p>feature(<a class="reference internal" href="#tra.features.Feature" title="tra.features.Feature"><code class="xref py py-class docutils literal"><span class="pre">tra.features.Feature</span></code></a>): The detected feature object.</p>
-<p>percent: The percentage of &#8220;fitness&#8221; (i.e inliers/total_points) of the feature detected                     in the image.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list containing:<p>feature(<a class="reference internal" href="#tra.ransac.RansacFeature.feature" title="tra.ransac.RansacFeature.feature"><code class="xref py py-attr docutils literal"><span class="pre">tra.ransac.RansacFeature.feature</span></code></a>): The detected feature object.</p>
+<p>percent(float): The percentage of &#8220;fitness&#8221; (i.e inliers/total_points) of the feature detected                     in the image.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(list)</td>
@@ -276,14 +276,14 @@ the <abbr title="Random Sample Consensus">RANSAC</abbr> algorithm.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> &#8211; the image where to detect the circle.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; the image where to detect the circle.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">tuple containing:
-feature (tra.ransac.RansacFeature.feature): the feature detected
-percent (float): the percentage of &#8216;fitness&#8217; (i.e.inliers/total_points)
-of the detected feature</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list containing:<p>feature (<a class="reference internal" href="#tra.ransac.RansacFeature.feature" title="tra.ransac.RansacFeature.feature"><code class="xref py py-class docutils literal"><span class="pre">tra.ransac.RansacFeature.feature</span></code></a>): The detected feature object</p>
+<p>percent (float): the percentage of &#8216;fitness&#8217; (i.e.inliers/total_points)
+of the detected feature</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(tuple)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(list)</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> &#8211;
 If the thresholded image is completely empty (all pixels intensities
@@ -307,7 +307,7 @@ a video.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>fs</strong> &#8211;
 the array of features detected</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.9)">numpy.array</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)">numpy.ndarray</a></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> &#8211;
 If the thresholded image is completely empty (all pixels intensities

@@ -29,7 +29,7 @@ class Feature(object):
                     computed of.
         
         Returns: 
-            distances (:py:class:`numpy.ndarray`): the computed distances of the points from the feature.
+            distances (numpy.ndarray): the computed distances of the points from the feature.
         '''
         
         raise NotImplemented
@@ -52,7 +52,7 @@ class Circle(Feature):
         circumference given three points
         
         Args:
-            points (:py:class:`numpy.ndarray`): a (3,2) numpy array, each row is a 2D Point.
+            points (numpy.ndarray): a (3,2) numpy array, each row is a 2D Point.
         
         Returns: 
             (tuple): A 3 elements tuple that contains the circumference radius
@@ -91,10 +91,10 @@ class Circle(Feature):
         :math:`d = \left| \sqrt{(x_i - x_c)^2 + (y_i-y_c)^2} - r \right|`
         
         Args:
-            points (:py:class:`numpy.ndarray`): a (3,2) numpy array, each row is a 2D Point.
+            points (numpy.ndarray): a (3,2) numpy array, each row is a 2D Point.
             
         Returns:
-            d (:py:class:`numpy.ndarray`): the computed distances of the points from the feature.
+            d (numpy.ndarray): the computed distances of the points from the feature.
         
         '''
         
@@ -119,10 +119,10 @@ class Exponential (Feature):
         exponential curve
         
         Args:
-            points(:py:class:`numpy.ndarray`): a (3,2) numpy array, each row is a 2D Point.
+            points(numpy.ndarray): a (3,2) numpy array, each row is a 2D Point.
         
         Returns: 
-            exp(:py:class:`numpy.ndarray`): A (3,) numpy array that contains the a,n,b parameters
+            exp(numpy.ndarray): A (3,) numpy array that contains the a,n,b parameters
             [a,k,b]
             
         Raises: 
