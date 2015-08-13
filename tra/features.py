@@ -130,8 +130,12 @@ class Circle(Feature):
         d = n.abs(dist.cdist(points,xa) - self.radius)
         return d
     
-    def points_distance(self,points):
-        return pool.map(self.__points_distance,points)
+    def points_distance(self,points,pool=None,chunks_num=100):
+        if pool:
+            return n.vstack(pool.map(self.__points_distance,points))
+            
+        else:
+            return self.__points_distance(points)
 
 class Exponential (Feature):
     '''

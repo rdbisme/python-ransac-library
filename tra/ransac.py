@@ -21,12 +21,13 @@ class RansacFeature(object):
              a pixel is considered an inlier if its distance is < dst).
     '''
     
-    def __init__(self,feature,max_it=100,inliers_percent=0.6, threshold = 100, dst = 10):
+    def __init__(self,feature,max_it=100,inliers_percent=0.6, threshold = 100, dst = 10,pool=None):
         self.feature = feature
         self.max_it = max_it 
         self.inliers_percent = inliers_percent 
         self.threshold = threshold
         self.dst = dst
+        self.pool = pool
         
     def detect_feature(self,pixels):
         ''' This method look for the feature inside a set of points.
@@ -68,7 +69,7 @@ class RansacFeature(object):
             except RuntimeError: # If the three points are collinear the circle cannot be computed
                 continue
             # Compute distance of all non-zero points from the circumference 
-            distances = guess_feature.points_distance(pixels)
+            distances = guess_feature.points_distance(pixels,pool=self.pool)
             
             # Check which points are inliers (i.e. near the circle)
             inliers = n.size(pixels[distances <= self.dst])
