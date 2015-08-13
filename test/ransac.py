@@ -3,18 +3,21 @@ import cv2
 from matplotlib import pyplot as plt
 import multiprocessing as mp
 import numpy as n
+import time
 from tra.ransac import RansacFeature
 from tra.features import Circle
 
 video = cv2.VideoCapture('../video/14_XVID.avi')
 print video.get(cv2.CAP_PROP_FPS)
-video.set(cv2.CAP_PROP_POS_FRAMES,850)
+video.set(cv2.CAP_PROP_POS_FRAMES,450)
 succ, frame = video.read()
 frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 
-pool = mp.Pool(mp.cpu_count())
+t = time.time()
+pool = mp.Pool()
 ransac_process = RansacFeature(Circle,max_it = 3E2, inliers_percent=0.7,dst=2.5,threshold=100,pool=pool)
 dc,percent = ransac_process.image_search(frame)
+print time.time() - t
 
 theta = n.linspace(-n.pi,n.pi,100)
 plt.imshow(frame, cmap='gray')
@@ -23,7 +26,7 @@ plt.ylim([0,512])
 plt.xlim([0,512])
 plt.axis('off')
 #plt.plot(pps[:,1],pps[:,0],'wo')
-print percent
+#print percent
 plt.savefig('data-capture.eps',format='eps',dpi=300)
 plt.show()
 

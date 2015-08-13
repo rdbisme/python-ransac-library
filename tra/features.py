@@ -1,5 +1,6 @@
 from __future__ import division
 import copy_reg
+import multiprocessing as mp
 import numpy as n
 import scipy.linalg as linalg
 import scipy.optimize as opt
@@ -130,9 +131,15 @@ class Circle(Feature):
         d = n.abs(dist.cdist(points,xa) - self.radius)
         return d
     
-    def points_distance(self,points,pool=None,chunks_num=100):
+    def points_distance(self,points,pool=None):
         if pool:
-            return n.vstack(pool.map(self.__points_distance,points))
+            
+            #Manual Chunking. Not efficient!
+            ## TODO ##
+            #Optimize Chunking
+            chunks_num = 10*mp.cpu_count()
+            chunks = n.array_split(points,chunks_num)
+            return n.vstack(pool.map(self.__points_distance,chunks))
             
         else:
             return self.__points_distance(points)

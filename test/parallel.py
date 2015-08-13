@@ -14,7 +14,7 @@ pool = mp.Pool()
 t1 = time.time() - t
 
 t = time.time()
-ds = feature.points_distance(points,pool=pool,chunks_num=1)
+ds = feature.points_distance(points,pool=pool)
 t2 = time.time() - t
 
-print (t1-t2)/t1
+print (t2-t1)/t1
