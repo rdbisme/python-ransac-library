@@ -71,9 +71,9 @@ class RansacFeature(object):
             # Compute distance of all non-zero points from the circumference 
             distances = guess_feature.points_distance(pixels)
             
-            # Check which points are inliers (i.e. near the circle)
-            inliers = n.size(pixels[distances <= self.dst])
-            
+            # Count how many points are inliers (i.e. near the circle)
+            inliers = n.size(n.nonzero(distances <= self.dst)[0])
+                        
             #Compute the percentage
             percent_new = inliers/n.size(pixels)
             
