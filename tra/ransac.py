@@ -1,5 +1,6 @@
 from __future__ import division
 import cv2
+from matplotlib import pyplot as plt
 import numpy as n
 import numpy.random as rnd
 import warnings
@@ -138,7 +139,7 @@ class RansacFeature(object):
         return self.detect_feature(pixels)
         
     
-    def video_processing(self,videofile):
+    def video_processing(self,videofile,save_frames=False):
         ''' This method look for the feature inside each frame of 
         a video. 
         
@@ -159,6 +160,8 @@ class RansacFeature(object):
         #Pre-allocating dataset for feature array
         fs = n.empty(nframes,dtype=self.feature)
         
+        if save_frames:
+            theta = n.linspace(-n.pi,n.pi,100)
         
         for i in xrange(nframes):
             succ, frame = video.read()
@@ -169,6 +172,14 @@ class RansacFeature(object):
                 try:
                     feature,_percent = self.image_search(frame)
                     fs[i] = feature
+                    
+                    if save_frames:
+                        plt.imshow(frame, cmap='gray')
+                        plt.plot(feature.yc + feature.radius*n.cos(theta), feature.xc + feature.radius*n.sin(theta),'r-',linewidth=2)
+                        plt.axis('off')
+                        plt.savefig('Frame_'+str(i))
+                        plt.close()
+                        
                 except ValueError:
                     fs[i] = None
                 
