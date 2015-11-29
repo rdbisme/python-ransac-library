@@ -7,7 +7,7 @@ import scipy.spatial.distance as dist
 class Feature(object):
     '''
     Abstract class that represents a feature to be used
-    with :py:class:`tra.ransac.RansacFeature`
+    with :py:class:`pyransac.ransac.RansacFeature`
     '''
     
     def __init__(self):

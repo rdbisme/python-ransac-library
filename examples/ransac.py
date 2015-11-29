@@ -2,10 +2,10 @@ from __future__ import division
 import cv2
 from matplotlib import pyplot as plt
 import numpy as n
-from tra.ransac import RansacFeature
-from tra.features import Circle
+from pyransac.ransac import RansacFeature
+from pyransac.features import Circle
 
-video = cv2.VideoCapture('../video/14_XVID.avi')
+video = cv2.VideoCapture('media/HRE-video.avi')
 print video.get(cv2.CAP_PROP_FPS)
 video.set(cv2.CAP_PROP_POS_FRAMES,250)
 succ, frame = video.read()

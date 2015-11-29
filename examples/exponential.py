@@ -1,7 +1,7 @@
 import numpy as np
 import scipy.optimize as opt
 import matplotlib.pyplot as plt
-from tra import features as ffs
+from pyransac import features as ffs
 a = 1
 b = 1
 n = 3

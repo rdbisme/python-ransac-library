@@ -12,7 +12,7 @@ class RansacFeature(object):
     the :abbr:`RANSAC (Random Sample Consensus)` algorithm.
     
     Attributes:
-        feature(:py:class:`tra.features.Feature`): the feature class.
+        feature(:py:class:`pyransac.features.Feature`): the feature class.
         max_it(int): Max Number of iterations for the RANSAC loop.
         inliers_percent(float): percentage of inliers over total points.\ 
                          Used for stop criteria in the RANSAC loop.
@@ -38,7 +38,7 @@ class RansacFeature(object):
         Returns:
             (list): list containing:
             
-                feature(:py:attr:`tra.ransac.RansacFeature.feature`): The detected feature object.
+                feature(:py:attr:`pyransac.ransac.RansacFeature.feature`): The detected feature object.
                 
                 percent(float): The percentage of "fitness" (i.e inliers/total_points) of the feature detected \
                     in the image.
@@ -102,7 +102,7 @@ class RansacFeature(object):
         Returns:
             (list): list containing:
             
-                feature (:py:class:`tra.ransac.RansacFeature.feature`): The detected feature object
+                feature (:py:class:`pyransac.ransac.RansacFeature.feature`): The detected feature object
                 
                 percent (float): the percentage of 'fitness' (i.e.inliers/total_points)
                 of the detected feature
