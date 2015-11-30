@@ -6,7 +6,7 @@ from pyransac.ransac import RansacFeature
 from pyransac.features import Circle
 
 # Extract a frame from the provided video
-video = cv2.VideoCapture('../media/HRE-video.avi')
+video = cv2.VideoCapture('media/HRE-video.avi')
 video.set(cv2.CAP_PROP_POS_FRAMES,250)
 succ, frame = video.read()
 
