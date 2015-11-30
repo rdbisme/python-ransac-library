@@ -3,7 +3,6 @@ import cv2
 from matplotlib import pyplot as plt
 import numpy as n
 import numpy.random as rnd
-import warnings
 
 
 class RansacFeature(object):
