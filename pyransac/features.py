@@ -1,4 +1,5 @@
 from __future__ import division
+import abc
 import numpy as n
 import scipy.linalg as linalg
 import scipy.optimize as opt
@@ -9,16 +10,19 @@ class Feature(object):
     Abstract class that represents a feature to be used
     with :py:class:`pyransac.ransac.RansacFeature`
     '''
+    __metaclass__ = abc.ABCMeta
     
+    @abc.abstractmethod
     def __init__(self):
-        raise NotImplemented
+        pass
     
-    @property
+    @abc.abstractproperty
     def min_points(self):
         '''int: Minimum number of points needed to define the feature.'''
         
-        raise NotImplemented
+        pass
     
+    @abc.abstractmethod
     def points_distance(self,points):
         ''' 
         This function implements a method to compute the distance 
@@ -32,7 +36,7 @@ class Feature(object):
             distances (numpy.ndarray): the computed distances of the points from the feature.
         '''
         
-        raise NotImplemented
+        pass
 
 class Circle(Feature):
     ''' 
