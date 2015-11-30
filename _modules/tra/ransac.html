@@ -128,6 +128,7 @@
   <h1>Source code for tra.ransac</h1><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 <span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">n</span>
 <span class="kn">import</span> <span class="nn">numpy.random</span> <span class="kn">as</span> <span class="nn">rnd</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -199,9 +200,9 @@
             <span class="c"># Compute distance of all non-zero points from the circumference </span>
             <span class="n">distances</span> <span class="o">=</span> <span class="n">guess_feature</span><span class="o">.</span><span class="n">points_distance</span><span class="p">(</span><span class="n">pixels</span><span class="p">)</span>
             
-            <span class="c"># Check which points are inliers (i.e. near the circle)</span>
-            <span class="n">inliers</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">pixels</span><span class="p">[</span><span class="n">distances</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dst</span><span class="p">])</span>
-            
+            <span class="c"># Count how many points are inliers (i.e. near the circle)</span>
+            <span class="n">inliers</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">distances</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dst</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                        
             <span class="c">#Compute the percentage</span>
             <span class="n">percent_new</span> <span class="o">=</span> <span class="n">inliers</span><span class="o">/</span><span class="n">n</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">pixels</span><span class="p">)</span>
             
@@ -266,7 +267,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">detect_feature</span><span class="p">(</span><span class="n">pixels</span><span class="p">)</span>
         
     </div>
-<div class="viewcode-block" id="RansacFeature.video_processing"><a class="viewcode-back" href="../../tra.html#tra.ransac.RansacFeature.video_processing">[docs]</a>    <span class="k">def</span> <span class="nf">video_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">videofile</span><span class="p">):</span>
+<div class="viewcode-block" id="RansacFeature.video_processing"><a class="viewcode-back" href="../../tra.html#tra.ransac.RansacFeature.video_processing">[docs]</a>    <span class="k">def</span> <span class="nf">video_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">videofile</span><span class="p">,</span><span class="n">save_frames</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; This method look for the feature inside each frame of </span>
 <span class="sd">        a video. </span>
 <span class="sd">        </span>
@@ -287,6 +288,8 @@
         <span class="c">#Pre-allocating dataset for feature array</span>
         <span class="n">fs</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">nframes</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">feature</span><span class="p">)</span>
         
+        <span class="k">if</span> <span class="n">save_frames</span><span class="p">:</span>
+            <span class="n">theta</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="n">n</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
         
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">nframes</span><span class="p">):</span>
             <span class="n">succ</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">video</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -297,6 +300,14 @@
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">feature</span><span class="p">,</span><span class="n">_percent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_search</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
                     <span class="n">fs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature</span>
+                    
+                    <span class="k">if</span> <span class="n">save_frames</span><span class="p">:</span>
+                        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;gray&#39;</span><span class="p">)</span>
+                        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">yc</span> <span class="o">+</span> <span class="n">feature</span><span class="o">.</span><span class="n">radius</span><span class="o">*</span><span class="n">n</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">feature</span><span class="o">.</span><span class="n">xc</span> <span class="o">+</span> <span class="n">feature</span><span class="o">.</span><span class="n">radius</span><span class="o">*</span><span class="n">n</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span><span class="s">&#39;r-&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">)</span>
+                        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&#39;Frame_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+                        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                        
                 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                     <span class="n">fs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
                 

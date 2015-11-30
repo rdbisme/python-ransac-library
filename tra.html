@@ -132,8 +132,125 @@
 <div class="section" id="tra-features-module">
 <h2>tra.features module<a class="headerlink" href="#tra-features-module" title="Permalink to this headline">¶</a></h2>
 </div>
+<<<<<<< HEAD
 <div class="section" id="tra-ransac-module">
 <h2>tra.ransac module<a class="headerlink" href="#tra-ransac-module" title="Permalink to this headline">¶</a></h2>
+=======
+<div class="section" id="module-tra.ransac">
+<span id="tra-ransac-module"></span><h2>tra.ransac module<a class="headerlink" href="#module-tra.ransac" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tra.ransac.RansacFeature">
+<em class="property">class </em><code class="descclassname">tra.ransac.</code><code class="descname">RansacFeature</code><span class="sig-paren">(</span><em>feature</em>, <em>max_it=100</em>, <em>inliers_percent=0.6</em>, <em>threshold=100</em>, <em>dst=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/ransac.html#RansacFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.ransac.RansacFeature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Class for feature detection inside images and videos with
+the <abbr title="Random Sample Consensus">RANSAC</abbr> algorithm.</p>
+<dl class="attribute">
+<dt id="tra.ransac.RansacFeature.feature">
+<code class="descname">feature</code><a class="headerlink" href="#tra.ransac.RansacFeature.feature" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#tra.features.Feature" title="tra.features.Feature"><code class="xref py py-class docutils literal"><span class="pre">tra.features.Feature</span></code></a></p>
+<p>the feature class.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tra.ransac.RansacFeature.max_it">
+<code class="descname">max_it</code><a class="headerlink" href="#tra.ransac.RansacFeature.max_it" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>Max Number of iterations for the RANSAC loop.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tra.ransac.RansacFeature.inliers_percent">
+<code class="descname">inliers_percent</code><a class="headerlink" href="#tra.ransac.RansacFeature.inliers_percent" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em></p>
+<p>percentage of inliers over total points.Used for stop criteria in the RANSAC loop.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tra.ransac.RansacFeature.threshold">
+<code class="descname">threshold</code><a class="headerlink" href="#tra.ransac.RansacFeature.threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>Value of threshold used after the image normalization                    (can be an integer from 1 to 254).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tra.ransac.RansacFeature.dst">
+<code class="descname">dst</code><a class="headerlink" href="#tra.ransac.RansacFeature.dst" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em></p>
+<p>the distance of the inliers pixels from the feature (i.e.             a pixel is considered an inlier if its distance is &lt; dst).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tra.ransac.RansacFeature.detect_feature">
+<code class="descname">detect_feature</code><span class="sig-paren">(</span><em>pixels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/ransac.html#RansacFeature.detect_feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.ransac.RansacFeature.detect_feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method look for the feature inside a set of points.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; a (n,n)-shaped numpy array of points.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list containing:<p>feature(<a class="reference internal" href="#tra.ransac.RansacFeature.feature" title="tra.ransac.RansacFeature.feature"><code class="xref py py-attr docutils literal"><span class="pre">tra.ransac.RansacFeature.feature</span></code></a>): The detected feature object.</p>
+<p>percent(float): The percentage of &#8220;fitness&#8221; (i.e inliers/total_points) of the feature detected                     in the image.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(list)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tra.ransac.RansacFeature.image_search">
+<code class="descname">image_search</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/ransac.html#RansacFeature.image_search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.ransac.RansacFeature.image_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method look for the feature inside a grayscale image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; the image where to detect the circle.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list containing:<p>feature (<a class="reference internal" href="#tra.ransac.RansacFeature.feature" title="tra.ransac.RansacFeature.feature"><code class="xref py py-class docutils literal"><span class="pre">tra.ransac.RansacFeature.feature</span></code></a>): The detected feature object</p>
+<p>percent (float): the percentage of &#8216;fitness&#8217; (i.e.inliers/total_points)
+of the detected feature</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(list)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> &#8211;
+If the thresholded image is completely empty (all pixels intensities
+== 0, a ValueError is raised).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tra.ransac.RansacFeature.video_processing">
+<code class="descname">video_processing</code><span class="sig-paren">(</span><em>videofile</em>, <em>save_frames=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tra/ransac.html#RansacFeature.video_processing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tra.ransac.RansacFeature.video_processing" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method look for the feature inside each frame of
+a video.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>videofile</strong> (<em>str</em>) &#8211; path string of the video file.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>fs</strong> &#8211;
+the array of features detected</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)">numpy.ndarray</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> &#8211;
+If the thresholded image is completely empty (all pixels intensities
+== 0, a ValueError is raised).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+>>>>>>> b1535d956665347800e3421fe72be07c90aa443d
 </div>
 <div class="section" id="module-contents">
 <h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
