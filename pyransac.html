@@ -1,0 +1,471 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyransac package &mdash; Python Ransac Library 0.1a documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Python Ransac Library 0.1a documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Python Ransac Library
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1a
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="simple">
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Python Ransac Library</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>pyransac package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/pyransac.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pyransac-package">
+<h1>pyransac package<a class="headerlink" href="#pyransac-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyransac.features">
+<span id="pyransac-features-module"></span><h2>pyransac.features module<a class="headerlink" href="#module-pyransac.features" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyransac.features.Circle">
+<em class="property">class </em><code class="descclassname">pyransac.features.</code><code class="descname">Circle</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="headerlink" href="#pyransac.features.Circle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyransac.features.Feature" title="pyransac.features.Feature"><code class="xref py py-class docutils literal"><span class="pre">pyransac.features.Feature</span></code></a></p>
+<p>Feature class for a Circle <span class="math">\((x-x_c)^2 + (y-y_c)^2 - r = 0\)</span></p>
+<dl class="attribute">
+<dt id="pyransac.features.Circle.min_points">
+<code class="descname">min_points</code><em class="property"> = 3</em><a class="headerlink" href="#pyransac.features.Circle.min_points" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; Minimum number of points needed to define the circle (3).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyransac.features.Circle.points_distance">
+<code class="descname">points_distance</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="headerlink" href="#pyransac.features.Circle.points_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the distance of the points from the feature</p>
+<p><span class="math">\(d = \left| \sqrt{(x_i - x_c)^2 + (y_i-y_c)^2} - r \right|\)</span></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<em>numpy.ndarray</em>) &#8211; a (3,2) numpy array, each row is a 2D Point.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>d</strong> &#8211; the computed distances of the points from the feature.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyransac.features.Circle.print_feature">
+<code class="descname">print_feature</code><span class="sig-paren">(</span><em>num_points</em><span class="sig-paren">)</span><a class="headerlink" href="#pyransac.features.Circle.print_feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns an array of x,y coordinates for
+points that are in the feature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>num_points</strong> (<em>numpy.ndarray</em>) &#8211; the number of points to be returned</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>coords</strong> &#8211; a num_points x 2 numpy array that contains
+the points coordinates</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyransac.features.Exponential">
+<em class="property">class </em><code class="descclassname">pyransac.features.</code><code class="descname">Exponential</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="headerlink" href="#pyransac.features.Exponential" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyransac.features.Feature" title="pyransac.features.Feature"><code class="xref py py-class docutils literal"><span class="pre">pyransac.features.Feature</span></code></a></p>
+<p>Feature Class for an exponential curve <span class="math">\(y=ax^{k} + b\)</span></p>
+<dl class="attribute">
+<dt id="pyransac.features.Exponential.min_points">
+<code class="descname">min_points</code><em class="property"> = 3</em><a class="headerlink" href="#pyransac.features.Exponential.min_points" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyransac.features.Exponential.points_distance">
+<code class="descname">points_distance</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="headerlink" href="#pyransac.features.Exponential.points_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the distance of the points from the feature</p>
+<p><span class="math">\(d = \sqrt{(x_i - x_c)^2 + (y_i-y_c)^2}\)</span></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<em>numpy.ndarray</em>) &#8211; a (3,2) numpy array, each row is a 2D Point.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>d</strong> &#8211; the computed distances of the points from the feature.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyransac.features.Exponential.print_feature">
+<code class="descname">print_feature</code><span class="sig-paren">(</span><em>num_points</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#pyransac.features.Exponential.print_feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns an array of x,y coordinates for
+points that are in the feature in the interval [a,b].</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>num_points</strong> (<em>numpy.ndarray</em>) &#8211; the number of points to be returned</li>
+<li><strong>a</strong> (<em>float</em>) &#8211; left end of the interval</li>
+<li><strong>b</strong> (<em>float</em>) &#8211; right end of the interval</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>coords</strong> &#8211; a num_points x 2 numpy array that contains
+the points coordinates</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyransac.features.Feature">
+<em class="property">class </em><code class="descclassname">pyransac.features.</code><code class="descname">Feature</code><a class="headerlink" href="#pyransac.features.Feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Abstract class that represents a feature to be used
+with <a class="reference internal" href="#pyransac.ransac.RansacFeature" title="pyransac.ransac.RansacFeature"><code class="xref py py-class docutils literal"><span class="pre">pyransac.ransac.RansacFeature</span></code></a></p>
+<dl class="attribute">
+<dt id="pyransac.features.Feature.min_points">
+<code class="descname">min_points</code><a class="headerlink" href="#pyransac.features.Feature.min_points" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; Minimum number of points needed to define the feature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyransac.features.Feature.points_distance">
+<code class="descname">points_distance</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="headerlink" href="#pyransac.features.Feature.points_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function implements a method to compute the distance
+of points from the feature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<em>numpy.ndarray</em>) &#8211; a numpy array of points the distance must be
+computed of.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>distances</strong> &#8211; the computed distances of the points from the feature.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyransac.features.Feature.print_feature">
+<code class="descname">print_feature</code><span class="sig-paren">(</span><em>num_points</em><span class="sig-paren">)</span><a class="headerlink" href="#pyransac.features.Feature.print_feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns an array of x,y coordinates for
+points that are in the feature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>num_points</strong> (<em>numpy.ndarray</em>) &#8211; the number of points to be returned</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>coords</strong> &#8211; a num_points x 2 numpy array that contains
+the points coordinates</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyransac.ransac">
+<span id="pyransac-ransac-module"></span><h2>pyransac.ransac module<a class="headerlink" href="#module-pyransac.ransac" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyransac.ransac.RansacFeature">
+<em class="property">class </em><code class="descclassname">pyransac.ransac.</code><code class="descname">RansacFeature</code><span class="sig-paren">(</span><em>feature</em>, <em>max_it=100</em>, <em>inliers_percent=0.6</em>, <em>threshold=100</em>, <em>dst=10</em><span class="sig-paren">)</span><a class="headerlink" href="#pyransac.ransac.RansacFeature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Class for feature detection inside images and videos with
+the <abbr title="Random Sample Consensus">RANSAC</abbr> algorithm.</p>
+<dl class="attribute">
+<dt id="pyransac.ransac.RansacFeature.feature">
+<code class="descname">feature</code><a class="headerlink" href="#pyransac.ransac.RansacFeature.feature" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#pyransac.features.Feature" title="pyransac.features.Feature"><code class="xref py py-class docutils literal"><span class="pre">pyransac.features.Feature</span></code></a> &#8211; the feature class.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyransac.ransac.RansacFeature.max_it">
+<code class="descname">max_it</code><a class="headerlink" href="#pyransac.ransac.RansacFeature.max_it" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; Max Number of iterations for the RANSAC loop.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyransac.ransac.RansacFeature.inliers_percent">
+<code class="descname">inliers_percent</code><a class="headerlink" href="#pyransac.ransac.RansacFeature.inliers_percent" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> &#8211; percentage of inliers over total points.Used for stop criteria in the RANSAC loop.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyransac.ransac.RansacFeature.threshold">
+<code class="descname">threshold</code><a class="headerlink" href="#pyransac.ransac.RansacFeature.threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; Value of threshold used after the image normalization                    (can be an integer from 1 to 254).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyransac.ransac.RansacFeature.dst">
+<code class="descname">dst</code><a class="headerlink" href="#pyransac.ransac.RansacFeature.dst" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> &#8211; the distance of the inliers pixels from the feature (i.e.             a pixel is considered an inlier if its distance is &lt; dst).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyransac.ransac.RansacFeature.detect_feature">
+<code class="descname">detect_feature</code><span class="sig-paren">(</span><em>pixels</em><span class="sig-paren">)</span><a class="headerlink" href="#pyransac.ransac.RansacFeature.detect_feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method look for the feature inside a set of points.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> (<em>numpy.ndarray</em>) &#8211; a (n,n)-shaped numpy array of points.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list containing:<p>feature(<a class="reference internal" href="#pyransac.ransac.RansacFeature.feature" title="pyransac.ransac.RansacFeature.feature"><code class="xref py py-attr docutils literal"><span class="pre">pyransac.ransac.RansacFeature.feature</span></code></a>): The detected feature object.</p>
+<p>percent(float): The percentage of &#8220;fitness&#8221; (i.e inliers/total_points) of the feature detected                     in the image.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(list)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyransac.ransac.RansacFeature.image_search">
+<code class="descname">image_search</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="headerlink" href="#pyransac.ransac.RansacFeature.image_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method look for the feature inside a grayscale image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> (<em>numpy.ndarray</em>) &#8211; the image where to detect the circle.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list containing:<p>feature (<a class="reference internal" href="#pyransac.ransac.RansacFeature.feature" title="pyransac.ransac.RansacFeature.feature"><code class="xref py py-class docutils literal"><span class="pre">pyransac.ransac.RansacFeature.feature</span></code></a>): The detected feature object</p>
+<p>percent (float): the percentage of &#8216;fitness&#8217; (i.e.inliers/total_points)
+of the detected feature</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(list)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> &#8211; If the thresholded image is completely empty (all pixels intensities
+== 0, a ValueError is raised).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyransac.ransac.RansacFeature.video_processing">
+<code class="descname">video_processing</code><span class="sig-paren">(</span><em>videofile</em>, <em>save_frames=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyransac.ransac.RansacFeature.video_processing" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method look for the feature inside each frame of
+a video.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>videofile</strong> (<em>str</em>) &#8211; path string of the video file.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>fs</strong> &#8211; the array of features detected</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> &#8211; If the thresholded image is completely empty (all pixels intensities
+== 0, a ValueError is raised).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyransac">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyransac" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Ruben Di Battista.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1a',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

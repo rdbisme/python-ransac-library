@@ -1,21 +1,21 @@
-tra package
-===========
+pyransac package
+================
 
 Submodules
 ----------
 
-tra.features module
--------------------
+pyransac.features module
+------------------------
 
-.. automodule:: tra.features
+.. automodule:: pyransac.features
     :members:
     :undoc-members:
     :show-inheritance:
 
-tra.ransac module
------------------
+pyransac.ransac module
+----------------------
 
-.. automodule:: tra.ransac
+.. automodule:: pyransac.ransac
     :members:
     :undoc-members:
     :show-inheritance:
@@ -24,7 +24,7 @@ tra.ransac module
 Module contents
 ---------------
 
-.. automodule:: tra
+.. automodule:: pyransac
     :members:
     :undoc-members:
     :show-inheritance:
