@@ -29,7 +29,7 @@ class Feature(object):
         of points from the feature.
         
         Args:
-            points: a numpy array of points the distance must be 
+            points (numpy.ndarray): a numpy array of points the distance must be 
                     computed of.
         
         Returns: 
@@ -37,6 +37,20 @@ class Feature(object):
         '''
         
         pass
+    
+    @abc.abstractmethod
+    def print_feature(self,num_points):
+        '''
+        This method returns an array of x,y coordinates for
+        points that are in the feature.
+        
+        Args:
+            num_points (numpy.ndarray): the number of points to be returned
+            
+        Returns:
+            coords (numpy.ndarray): a num_points x 2 numpy array that contains 
+            the points coordinates  
+        '''
 
 class Circle(Feature):
     ''' 
@@ -68,7 +82,8 @@ class Circle(Feature):
     '''            
       
         # Linear system for (D,E,F) in circle 
-        # equation: D*x + E*y + F = -(x**2 + y**2)
+        # equations: D*xi + E*yi + F = -(xi**2 + yi**2)
+        # where xi, yi are the coordinate of the i-th point.
         
         # Generating A matrix 
         A = n.array([(x,y,1) for x,y in points])
@@ -105,6 +120,26 @@ class Circle(Feature):
         xa = n.array([self.xc,self.yc]).reshape((1,2))
         d = n.abs(dist.cdist(points,xa) - self.radius)
         return d
+    
+    
+    def print_feature(self, num_points):
+        '''
+        This method returns an array of x,y coordinates for
+        points that are in the feature.
+        
+        Args:
+            num_points (numpy.ndarray): the number of points to be returned
+            
+        Returns:
+            coords (numpy.ndarray): a num_points x 2 numpy array that contains 
+            the points coordinates  
+        '''
+        
+        theta = n.linspace(0,2*n.pi,num_points)
+        x = self.xc + self.radius*n.cos(theta)
+        y = self.yc + self.radius*n.sin(theta)
+        
+        return n.vstack((x,y))
     
 class Exponential (Feature):
     '''
@@ -175,4 +210,24 @@ class Exponential (Feature):
         d = dist.cdist(points,xa)        
         return n.diag(d)
     
+    def print_feature(self, num_points, a,b):
+        '''
+        This method returns an array of x,y coordinates for
+        points that are in the feature in the interval [a,b].
+        
+        Args:
+            num_points (numpy.ndarray): the number of points to be returned
+            a (float): left end of the interval
+            b (float): right end of the interval
+            
+        Returns:
+            coords (numpy.ndarray): a num_points x 2 numpy array that contains 
+            the points coordinates  
+        '''
+        
+        
+        x = n.linspace(a,b,num_points)
+        y = self.a*x**self.k + self.b
+        
+        return n.vstack((x,y))
     
