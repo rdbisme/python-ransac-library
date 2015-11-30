@@ -1,9 +1,9 @@
-.. Python RANSAC Library documentation master file, created by
-   sphinx-quickstart on Tue Jul 14 18:56:02 2015.
+.. Python Ransac Library documentation master file, created by
+   sphinx-quickstart on Mon Nov 30 04:13:13 2015.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Python RANSAC Library's documentation!
+Welcome to Python Ransac Library's documentation!
 =================================================
 
 Contents:

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# Python RANSAC Library documentation build configuration file, created by
-# sphinx-quickstart on Tue Jul 14 18:56:02 2015.
+# Python Ransac Library documentation build configuration file, created by
+# sphinx-quickstart on Mon Nov 30 04:13:13 2015.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -30,12 +30,11 @@ sys.path.insert(0, os.path.abspath('..'))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.todo',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.intersphinx',
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
-    'sphinx.ext.autodoc',
-    'sphinx.ext.napoleon',
-    'sphinx.ext.intersphinx'
+    'sphinxcontrib.napoleon'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -53,7 +52,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Python RANSAC Library'
+project = u'Python Ransac Library'
 copyright = u'2015, Ruben Di Battista'
 author = u'Ruben Di Battista'
 
@@ -108,14 +107,14 @@ pygments_style = 'sphinx'
 #keep_warnings = False
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = True
+todo_include_todos = False
 
 
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -207,7 +206,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'PythonRANSACLibrarydoc'
+htmlhelp_basename = 'PythonRansacLibrarydoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -229,7 +228,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'PythonRANSACLibrary.tex', u'Python RANSAC Library Documentation',
+  (master_doc, 'PythonRansacLibrary.tex', u'Python Ransac Library Documentation',
    u'Ruben Di Battista', 'manual'),
 ]
 
@@ -259,7 +258,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'pythonransaclibrary', u'Python RANSAC Library Documentation',
+    (master_doc, 'pythonransaclibrary', u'Python Ransac Library Documentation',
      [author], 1)
 ]
 
@@ -273,8 +272,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'PythonRANSACLibrary', u'Python RANSAC Library Documentation',
-   author, 'PythonRANSACLibrary', 'One line description of project.',
+  (master_doc, 'PythonRansacLibrary', u'Python Ransac Library Documentation',
+   author, 'PythonRansacLibrary', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -290,5 +289,10 @@ texinfo_documents = [
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
 
-# Intersphinx libraries
-intersphinx_mapping = {'numpy':('http://docs.scipy.org/doc/numpy',None)}
+
+# Example configuration for intersphinx: refer to the Python standard library.
+intersphinx_mapping = {
+'python': ('https://docs.python.org/2.7', None),
+'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+'cv2' : ('http://docs.opencv.org/2.4/', None)
+}
